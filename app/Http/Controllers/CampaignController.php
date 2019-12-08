@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCampaign;
+use App\Models\Campaign;
 
 class CampaignController extends Controller
 {
@@ -29,5 +30,16 @@ class CampaignController extends Controller
 		);
 
 		return redirect()->route('campaign.list');
+	}
+
+	public function play(Campaign $campaign)
+	{
+		return view(
+			'campaign.play',
+			[
+				'needJs' => true,
+				'campaign' => $campaign,
+			]
+		);
 	}
 }

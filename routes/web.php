@@ -34,5 +34,6 @@ Route::group(
 		$route->get('/campaign', [CampaignController::class, 'list'])->name('campaign.list');
 		$route->get('/campaign/create', [CampaignController::class, 'getCreate'])->name('campaign.create');
 		$route->post('/campaign/create', [CampaignController::class, 'postCreate']);
+		$route->get('/campaign/{campaign}/play', [CampaignController::class, 'play'])->name('campaign.play');
 	}
 );

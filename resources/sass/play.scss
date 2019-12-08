@@ -1,0 +1,163 @@
+@import 'openmoji';
+
+.paper-btn {
+	background-color: $main-background;
+}
+
+.play-container {
+	margin: 10px auto 0;
+	padding: 0 50px;
+
+	h2 {
+		margin-bottom: .5em;
+	}
+}
+
+.play-space {
+	width: 100%;
+	display: flex;
+}
+
+.play-quest-list {
+	flex: 0;
+	max-width: 12rem;
+	@include border-style(1);
+	margin-right: 1rem;
+	padding: .25rem .75rem;
+
+	ul {
+		padding: 0;
+
+		li {
+			text-indent: 7px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+
+			&.active {
+				font-weight: bold;
+				text-indent: 22px;
+
+				&::before {
+					content: "+";
+				}
+			}
+		}
+	}
+}
+
+.play-quest {
+	flex: 1;
+	display: flex;
+	@include border-style(2);
+	padding: .25rem 1rem;
+}
+
+.play-quest-list, .play-quest {
+	background-color: lighten($primary, 65%);
+	border: 2px solid $primary;
+}
+
+.play-step-list {
+	flex: 3;
+
+	.play-step {
+		&.state-done {
+			opacity: .6;
+		}
+
+		&.state-in-progress {
+			background-color: $secondary-light;
+		}
+
+		h4 {
+			margin: 0;
+		}
+	}
+
+	.play-step-add {
+		text-align: center;
+
+		i {
+			font-size: 1rem;
+		}
+	}
+}
+
+.play-comment-list {
+	flex: 2;
+	margin-left: .5rem;
+
+	.play-comment {
+		font-size: .85rem;
+
+		&.type-event {
+			background-color: $warning-light;
+		}
+
+		h5 {
+			margin: 0;
+		}
+	}
+
+	.play-comment-add {
+		text-align: center;
+
+		i {
+			font-size: 1rem;
+		}
+	}
+}
+
+.play-step, .play-comment {
+	border: 1.5px solid $primary;
+	padding: .5rem 1rem;
+	margin: .5rem 0;
+	background-color: $main-background;
+	overflow: hidden;
+
+	&:nth-of-type(6n) {
+		@include border-style(3);
+	}
+
+	&:nth-of-type(6n+1) {
+		@include border-style(4);
+	}
+
+	&:nth-of-type(6n+2) {
+		@include border-style(5);
+	}
+
+	&:nth-of-type(6n+3) {
+		@include border-style(6);
+	}
+
+	&:nth-of-type(6n+4) {
+		@include border-style(1);
+	}
+
+	&:nth-of-type(6n+5) {
+		@include border-style(2);
+	}
+
+	.dm-content {
+		background-color: $danger-light;
+		margin: 0 -1rem -0.5rem -1rem;
+		padding: 0 1rem .5rem 1rem;
+	}
+
+	.play-step-actions-dm {
+		float: right;
+
+		i {
+			font-size: 1rem;
+		}
+	}
+
+	.play-step-actions-dm, .play-step-actions-player {
+		a {
+			background-image: none;
+			color: $primary;
+		}
+	}
+}

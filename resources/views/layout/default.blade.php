@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-	@if(isset($needJs) && $needJs)
-		<script src="{{ asset('js/app.js') }}" type="application/javascript"></script>
-	@endif
-	<title>Document</title>
-</head>
-<body>
+@extends('layout.minimal')
+
+@section('body')
 <nav class="border split-nav">
 	<div class="nav-brand">
 		<h3><a href="/">@lang('home.title')</a></h3>
@@ -37,8 +27,7 @@
 		</div>
 	</div>
 </nav>
-<div id="app" class="paper container">
+<div class="paper container">
 	@yield('content')
 </div>
-</body>
-</html>
+@endsection

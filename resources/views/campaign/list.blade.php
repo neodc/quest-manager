@@ -13,7 +13,7 @@
 	<ul>
 		@foreach($campaigns as $campaign)
 			<li>
-				<a>{{ $campaign->name }}</a>
+				<a href="{{ route('campaign.play', ['campaign' => $campaign->id]) }}">{{ $campaign->name }}</a>
 			</li>
 		@endforeach
 	</ul>

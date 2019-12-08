@@ -13,4 +13,7 @@ return [
 		'name' => 'Name:',
 		'submit' => 'Create',
 	],
+	'play' => [
+
+	],
 ];
