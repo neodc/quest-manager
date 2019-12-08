@@ -9,18 +9,32 @@
 	<title>Document</title>
 </head>
 <body>
-<div id="app" class="paper container">
-	<div
-		class="text-right padding-left-large padding-right-large padding-top-small padding-bottom-small background-primary"
-		style="margin: -2rem; border-bottom: solid 2px black"
-	>
-		@auth
-			<a href="#" class="paper-btn btn-muted">@lang('layout.logout')</a>
-		@else
-			<a href="#" class="paper-btn btn-muted">@lang('layout.login')</a>
-			<a href="#" class="paper-btn btn-muted">@lang('layout.register')</a>
-		@endauth
+<nav class="border split-nav">
+	<div class="nav-brand">
+		<h3><a href="/">@lang('home.title')</a></h3>
 	</div>
+	<div class="collapsible">
+		<input id="collapsible1" type="checkbox" name="collapsible1">
+		<button>
+			<label for="collapsible1">
+				<div class="bar1"></div>
+				<div class="bar2"></div>
+				<div class="bar3"></div>
+			</label>
+		</button>
+		<div class="collapsible-body">
+			<ul class="inline">
+				@auth
+					<li><a href="{{ route('logout') }}">@lang('layout.logout')</a></li>
+				@else
+					<li><a href="{{ route('login') }}">@lang('layout.login')</a></li>
+					<li><a href="{{ route('register') }}">@lang('layout.register')</a></li>
+				@endauth
+			</ul>
+		</div>
+	</div>
+</nav>
+<div id="app" class="paper container">
 	<div class="row flex-edges">
 		@yield('content')
 	</div>

@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Neucha|Patrick+Hand+SC);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Neucha|Patrick+Hand+SC);@charset "UTF-8";
 
 /* PaperCSS core */
 
@@ -3095,5 +3095,19 @@ nav .collapsible > button {
   nav .collapsible > button {
     display: block;
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+
+.has-error * {
+  color: #a7342d;
+  border-color: #a7342d;
 }
 
