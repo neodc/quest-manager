@@ -18,6 +18,7 @@ class DbV1 extends Migration
 			function (Blueprint $table) {
 				$table->bigIncrements('id');
 				$table->string('name');
+				$table->timestamps();
 			}
 		);
 
@@ -27,6 +28,7 @@ class DbV1 extends Migration
 				$table->unsignedBigInteger('campaign_id');
 				$table->unsignedBigInteger('user_id');
 				$table->boolean('is_dm');
+				$table->timestamps();
 
 				$table->foreign('campaign_id')
 					->references('id')
@@ -49,6 +51,7 @@ class DbV1 extends Migration
 				$table->unsignedBigInteger('campaign_id');
 				$table->string('name');
 				$table->string('icon');
+				$table->timestamps();
 
 				$table->foreign('campaign_id')
 					->references('id')
@@ -67,6 +70,7 @@ class DbV1 extends Migration
 				$table->mediumText('dm_content');
 				$table->enum('state', ['todo', 'in_progress', 'done']);
 				$table->boolean('is_visible');
+				$table->timestamps();
 
 				$table->foreign('quest_id')
 					->references('id')
@@ -84,6 +88,7 @@ class DbV1 extends Migration
 				$table->mediumText('player_description');
 				$table->mediumText('dm_description');
 				$table->boolean('is_visible');
+				$table->timestamps();
 
 				$table->foreign('campaign_id')
 					->references('id')
@@ -104,6 +109,7 @@ class DbV1 extends Migration
 				$table->mediumText('dm_text');
 				$table->boolean('is_visible');
 				$table->string('type');
+				$table->timestamps();
 
 				$table->foreign('quest_id')
 					->references('id')
@@ -132,6 +138,7 @@ class DbV1 extends Migration
 			function (Blueprint $table) {
 				$table->unsignedBigInteger('user_id');
 				$table->unsignedBigInteger('resource_id');
+				$table->timestamps();
 
 				$table->foreign('user_id')
 					->references('id')
