@@ -27,6 +27,7 @@
 		<div class="collapsible-body">
 			<ul class="inline">
 				@auth
+					<li><a href="{{ route('campaign.list') }}">@lang('layout.campaign_list')</a></li>
 					<li><a href="{{ route('logout') }}">@lang('layout.logout')</a></li>
 				@else
 					<li><a href="{{ route('login') }}">@lang('layout.login')</a></li>
