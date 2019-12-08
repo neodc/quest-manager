@@ -37,9 +37,7 @@
 	</div>
 </nav>
 <div id="app" class="paper container">
-	<div class="row flex-edges">
-		@yield('content')
-	</div>
+	@yield('content')
 </div>
 </body>
 </html>
