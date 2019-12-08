@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin \Eloquent
+ * @mixin Eloquent
+ * @property int $id
+ * @property string $name
+ * @property-read Collection|Quest[] $quests
+ * @property-read Collection|Resource[] $resources
+ * @property-read Collection|User[] $users
  */
 class Campaign extends Model
 {

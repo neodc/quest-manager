@@ -2,10 +2,24 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin \Eloquent
+ * @mixin Eloquent
+ * @property int $id
+ * @property int $quest_id
+ * @property int|null $user_id
+ * @property int|null $step_id
+ * @property int|null $resource_id
+ * @property string $player_text
+ * @property string $dm_text
+ * @property bool $is_visible
+ * @property string $type
+ * @property-read Quest $quest
+ * @property-read Resource|null $resource
+ * @property-read Step|null $step
+ * @property-read User|null $user
  */
 class Comment extends Model
 {

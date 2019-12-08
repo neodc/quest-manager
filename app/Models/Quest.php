@@ -2,10 +2,19 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin \Eloquent
+ * @mixin Eloquent
+ * @property int $id
+ * @property int $campaign_id
+ * @property string $name
+ * @property string $icon
+ * @property-read Campaign $campaign
+ * @property-read Collection|Comment[] $comments
+ * @property-read Collection|Step[] $steps
  */
 class Quest extends Model
 {

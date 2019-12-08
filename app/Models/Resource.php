@@ -2,10 +2,21 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin \Eloquent
+ * @mixin Eloquent
+ * @property int $id
+ * @property int $campaign_id
+ * @property string $name
+ * @property string $player_description
+ * @property string $dm_description
+ * @property bool $is_visible
+ * @property-read Campaign $campaign
+ * @property-read Collection|User[] $command_by
+ * @property-read Collection|Comment[] $comments
  */
 class Resource extends Model
 {

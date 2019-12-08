@@ -2,11 +2,28 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
- * @mixin \Eloquent
+ * @mixin Eloquent
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|Campaign[] $campaigns
+ * @property-read Collection|Resource[] $can_talk_has
+ * @property-read Collection|Comment[] $comments
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  */
 class User extends Authenticatable
 {
