@@ -4,7 +4,8 @@
 @section('body')
 <div id="app" class="play-container">
 	<h2>{{ $campaign->name }}</h2>
-	<div class="play-space">
+	<play :url_update="'{{ route('api.campaign.detail', [$campaign]) }}'"></play>
+	{{--<div class="play-space">
 		<div class="play-quest-list">
 			<ul>
 				<li class="active"><a href="#">Quest 1</a></li>
@@ -23,15 +24,15 @@
 					<h4>
 						Step done
 						<span class="play-step-actions-player">
-							<a href="#" title="todo"><i>📋</i></a> {{-- todo --}}
-							<a href="#" title="in progress"><i>⏳</i></a> {{-- in progress --}}
-							<a href="#" title="done"><i>🏅</i></a> {{-- done --}}
-							<a href="#" title="hidden"><i>🚷</i></a> {{-- Visible --}}
-							<a href="#" title="visible"><i>🚹</i></a> {{-- Visible --}}
+							<a href="#" title="todo"><i>📋</i></a> --}}{{-- todo --}}{{--
+							<a href="#" title="in progress"><i>⏳</i></a> --}}{{-- in progress --}}{{--
+							<a href="#" title="done"><i>🏅</i></a> --}}{{-- done --}}{{--
+							<a href="#" title="hidden"><i>🚷</i></a> --}}{{-- Visible --}}{{--
+							<a href="#" title="visible"><i>🚹</i></a> --}}{{-- Visible --}}{{--
 						</span>
 						<span class="play-step-actions-dm">
-							<a href="#" title="edit"><i>✏️</i></a> {{-- Edit --}}
-								<a href="#" title="delete"><i>❌</i></a> {{-- Delete --}}
+							<a href="#" title="edit"><i>✏️</i></a> --}}{{-- Edit --}}{{--
+								<a href="#" title="delete"><i>❌</i></a> --}}{{-- Delete --}}{{--
 						</span>
 					</h4>
 					<div class="player-content">
@@ -76,13 +77,13 @@
 					<h5>
 						Name
 						<span class="play-step-actions-player">
-							<a href="#"><i>⤴️</i></a> {{-- link to step --}}
-							<a href="#" title="hidden"><i>🚷</i></a> {{-- Visible --}}
-							<a href="#" title="visible"><i>🚹</i></a> {{-- Visible --}}
+							<a href="#"><i>⤴️</i></a> --}}{{-- link to step --}}{{--
+							<a href="#" title="hidden"><i>🚷</i></a> --}}{{-- Visible --}}{{--
+							<a href="#" title="visible"><i>🚹</i></a> --}}{{-- Visible --}}{{--
 						</span>
 						<span class="play-step-actions-dm">
-							<a href="#" title="edit"><i>✏️</i></a> {{-- Edit --}}
-								<a href="#" title="delete"><i>❌</i></a> {{-- Delete --}}
+							<a href="#" title="edit"><i>✏️</i></a> --}}{{-- Edit --}}{{--
+								<a href="#" title="delete"><i>❌</i></a> --}}{{-- Delete --}}{{--
 						</span>
 						<br>
 						<small>2019-12-08 21:00:00</small>
@@ -102,12 +103,12 @@
 					<h5>
 						Something append!
 						<span class="play-step-actions-player">
-							<a href="#" title="hidden"><i>🚷</i></a> {{-- Visible --}}
-							<a href="#" title="visible"><i>🚹</i></a> {{-- Visible --}}
+							<a href="#" title="hidden"><i>🚷</i></a> --}}{{-- Visible --}}{{--
+							<a href="#" title="visible"><i>🚹</i></a> --}}{{-- Visible --}}{{--
 						</span>
 						<span class="play-step-actions-dm">
-							<a href="#" title="edit"><i>✏️</i></a> {{-- Edit --}}
-								<a href="#" title="delete"><i>❌</i></a> {{-- Delete --}}
+							<a href="#" title="edit"><i>✏️</i></a> --}}{{-- Edit --}}{{--
+								<a href="#" title="delete"><i>❌</i></a> --}}{{-- Delete --}}{{--
 						</span>
 						<br>
 						<small>2019-12-08 21:00:00</small>
@@ -120,6 +121,6 @@
 				</p>
 			</div>
 		</div>
-	</div>
+	</div>--}}
 </div>
 @endsection

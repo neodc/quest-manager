@@ -35,5 +35,7 @@ Route::group(
 		$route->get('/campaign/create', [CampaignController::class, 'getCreate'])->name('campaign.create');
 		$route->post('/campaign/create', [CampaignController::class, 'postCreate']);
 		$route->get('/campaign/{campaign}/play', [CampaignController::class, 'play'])->name('campaign.play');
+
+		$route->get('/api/campaigns/{campaign}', [CampaignController::class, 'get'])->name('api.campaign.detail');
 	}
 );

@@ -3147,6 +3147,10 @@ i {
   background-color: white;
 }
 
+.option-availible {
+  opacity: .5;
+}
+
 .play-container {
   margin: 10px auto 0;
   padding: 0 50px;
@@ -3160,6 +3164,10 @@ i {
   width: 100%;
   display: -webkit-box;
   display: flex;
+}
+
+.play-space a {
+  cursor: pointer;
 }
 
 .play-quest-list {
@@ -3217,24 +3225,24 @@ i {
           flex: 3;
 }
 
-.play-step-list .play-step.state-done {
-  opacity: .6;
-}
-
-.play-step-list .play-step.state-in-progress {
-  background-color: #deefff;
-}
-
-.play-step-list .play-step h4 {
-  margin: 0;
-}
-
 .play-step-list .play-step-add {
   text-align: center;
 }
 
 .play-step-list .play-step-add i {
   font-size: 1rem;
+}
+
+.play-step.state-done {
+  opacity: .6;
+}
+
+.play-step.state-in_progress {
+  background-color: #deefff;
+}
+
+.play-step h4 {
+  margin: 0;
 }
 
 .play-comment-list {
@@ -3253,6 +3261,12 @@ i {
 
 .play-comment-list .play-comment h5 {
   margin: 0;
+}
+
+.play-comment-list .play-comment .play-comment-step {
+  position: fixed;
+  display: none;
+  width: 800px;
 }
 
 .play-comment-list .play-comment-add {

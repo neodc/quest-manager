@@ -4,6 +4,10 @@
 	background-color: $main-background;
 }
 
+.option-availible {
+	opacity: .5;
+}
+
 .play-container {
 	margin: 10px auto 0;
 	padding: 0 50px;
@@ -16,6 +20,10 @@
 .play-space {
 	width: 100%;
 	display: flex;
+
+	a {
+		cursor: pointer;
+	}
 }
 
 .play-quest-list {
@@ -61,26 +69,26 @@
 .play-step-list {
 	flex: 3;
 
-	.play-step {
-		&.state-done {
-			opacity: .6;
-		}
-
-		&.state-in-progress {
-			background-color: $secondary-light;
-		}
-
-		h4 {
-			margin: 0;
-		}
-	}
-
 	.play-step-add {
 		text-align: center;
 
 		i {
 			font-size: 1rem;
 		}
+	}
+}
+
+.play-step {
+	&.state-done {
+		opacity: .6;
+	}
+
+	&.state-in_progress {
+		background-color: $secondary-light;
+	}
+
+	h4 {
+		margin: 0;
 	}
 }
 
@@ -97,6 +105,12 @@
 
 		h5 {
 			margin: 0;
+		}
+
+		.play-comment-step {
+			position: fixed;
+			display: none;
+			width: 800px;
 		}
 	}
 

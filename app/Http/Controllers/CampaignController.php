@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCampaign;
 use App\Models\Campaign;
+use App\Models\User;
 
 class CampaignController extends Controller
 {
@@ -41,5 +42,19 @@ class CampaignController extends Controller
 				'campaign' => $campaign,
 			]
 		);
+	}
+
+	public function get(Campaign $campaign)
+	{
+		/** @var User $user */
+		$user = $campaign->users()->find(\Auth::id());
+
+		return [
+			'campaign' => $campaign->load('quests', 'quests.steps', 'quests.comments', 'quests.comments.user', 'quests.comments.resource'),
+			'user' => [
+				'id' => $user->id,
+				'isDM' => $user->pivot->is_dm,
+			],
+		];
 	}
 }
