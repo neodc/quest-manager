@@ -30,6 +30,11 @@ class CommentController extends Controller
 		$comment->save();
 	}
 
+	public function delete(Comment $comment)
+	{
+		$comment->delete();
+	}
+
 	public function visibility(Comment $comment, VisibilityComment $request)
 	{
 		$comment->is_visible = $request->is_visible;

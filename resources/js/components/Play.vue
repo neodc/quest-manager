@@ -27,8 +27,10 @@
 			@step-edited="stepEdited"
 			@step-visibility-change="stepVisibilityChange"
 			@step-state-change="stepStateChange"
+			@step-delete="stepDelete"
 			@comment-edited="commentEdited"
 			@comment-visibility-change="commentVisibilityChange"
+			@comment-delete="commentDelete"
 		/>
     </div>
 </template>
@@ -40,23 +42,23 @@
 				type: String,
 				required: true,
 			},
-			url_edit_step: {
+			url_step: {
 				type: String,
 				required: true,
 			},
-			url_visibility_step: {
+			url_step_visibility: {
 				type: String,
 				required: true,
 			},
-			url_state_step: {
+			url_step_state: {
 				type: String,
 				required: true,
 			},
-			url_edit_comment: {
+			url_comment: {
 				type: String,
 				required: true,
 			},
-			url_visibility_comment: {
+			url_comment_visibility: {
 				type: String,
 				required: true,
 			},
@@ -99,7 +101,7 @@
 			async stepEdited(step) {
 				axios
 					.post(
-						this.url_edit_step.replace(':step', step.id),
+						this.url_step.replace(':step', step.id),
 						{
 							name: step.name,
 							player_content: step.player_content,
@@ -111,7 +113,7 @@
 			async stepVisibilityChange(step) {
 				axios
 					.put(
-						this.url_visibility_step.replace(':step', step.id),
+						this.url_step_visibility.replace(':step', step.id),
 						{
 							is_visible: step.is_visible,
 						}
@@ -121,17 +123,22 @@
 			async stepStateChange(step) {
 				axios
 					.put(
-						this.url_state_step.replace(':step', step.id),
+						this.url_step_state.replace(':step', step.id),
 						{
 							state: step.state,
 						}
 					)
 					.then(this.load);
 			},
+			async stepDelete(step) {
+				axios
+					.delete(this.url_step.replace(':step', step.id))
+					.then(this.load);
+			},
 			async commentEdited(comment) {
 				axios
 					.post(
-						this.url_edit_comment.replace(':comment', comment.id),
+						this.url_comment.replace(':comment', comment.id),
 						{
 							resource_id: comment.resource_id,
 							player_text: comment.player_text,
@@ -143,11 +150,16 @@
 			async commentVisibilityChange(comment) {
 				axios
 					.put(
-						this.url_visibility_comment.replace(':comment', comment.id),
+						this.url_comment_visibility.replace(':comment', comment.id),
 						{
 							is_visible: comment.is_visible,
 						}
 					)
+					.then(this.load);
+			},
+			async commentDelete(comment) {
+				axios
+					.delete(this.url_edit_comment.replace(':comment', comment.id))
 					.then(this.load);
 			},
 		},

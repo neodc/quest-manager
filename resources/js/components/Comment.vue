@@ -112,7 +112,9 @@
 				this.editing = false;
 			},
 			remove() {
-				// TODO
+				if(confirm('Are you sure you want to delete this comment?')) {
+					this.$emit('delete', {id: this.comment.id})
+				}
 			},
 			showStep(e) {
 				let step = this.$parent.$refs.steps.find((step) => step.step.id === this.comment.step_id);

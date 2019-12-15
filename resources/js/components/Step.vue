@@ -107,7 +107,9 @@
 				this.editing = false;
 			},
 			remove() {
-				// TODO
+				if(confirm('Are you sure you want to delete the step "' + this.step.name + '"?')) {
+					this.$emit('delete', {id: this.step.id})
+				}
 			},
 		},
 	}

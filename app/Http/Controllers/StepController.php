@@ -18,6 +18,11 @@ class StepController extends Controller
 		$step->save();
 	}
 
+	public function delete(Step $step)
+	{
+		$step->delete();
+	}
+
 	public function visibility(Step $step, VisibilityStep $request)
 	{
 		$step->is_visible = $request->is_visible;
