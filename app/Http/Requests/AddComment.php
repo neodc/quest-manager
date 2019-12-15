@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
-class EditComment extends FormRequest
+use App\Models\Quest;
+use App\Rules\Exists;
+
+class AddComment extends FormRequest
 {
 	public function rules()
 	{
@@ -10,6 +13,11 @@ class EditComment extends FormRequest
             'resource_id' => 'nullable|int|min:1',
             'player_text' => 'nullable|string',
             'dm_text' => 'nullable|string',
+			'quest_id' => [
+				'required',
+				new Exists(Quest::class),
+			],
+			'type' => 'nullable|in:message,event',
 		];
 	}
 }

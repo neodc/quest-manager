@@ -3124,6 +3124,18 @@ h6 small {
   display: inline;
 }
 
+.modal-body.is-overlay {
+  width: calc(100% - 100px);
+}
+
+.is-fullwidth {
+  width: 100%;
+}
+
+textarea.is-fullwidth {
+  resize: vertical;
+}
+
 /**
 From https://github.com/hfg-gmuend/openmoji
  */
@@ -3149,11 +3161,6 @@ i {
 
 i.no-color {
   font-family: OpenMojiBlack, segoe ui emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol, sans-serif;
-}
-
-textarea.is-fullwidth {
-  width: 100%;
-  resize: vertical;
 }
 
 .paper-btn {

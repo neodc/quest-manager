@@ -50,7 +50,6 @@ class DbV1 extends Migration
 				$table->bigIncrements('id');
 				$table->unsignedBigInteger('campaign_id');
 				$table->string('name');
-				$table->string('icon');
 				$table->timestamps();
 
 				$table->foreign('campaign_id')

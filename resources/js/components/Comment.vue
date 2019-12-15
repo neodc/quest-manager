@@ -76,6 +76,10 @@
 		computed: {
         	name()
 			{
+				if( this.comment.type === 'event' )
+				{
+					return this.comment.player_text;
+				}
 				if( this.comment.resource !== null )
 				{
 					return this.comment.resource.name;
@@ -84,12 +88,8 @@
 				{
 					return this.comment.user.name;
 				}
-				if( this.comment.type === 'message' )
-				{
-					return 'Deleted';
-				}
 
-				return this.comment.player_text;
+				return 'Deleted';
 			},
 			canEdit()
 			{
