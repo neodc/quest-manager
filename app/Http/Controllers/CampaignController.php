@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCampaign;
 use App\Models\Campaign;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class CampaignController extends Controller
 {
@@ -49,12 +50,27 @@ class CampaignController extends Controller
 		/** @var User $user */
 		$user = $campaign->users()->find(\Auth::id());
 
+		$resourcesQuery = $campaign->resources();
+
+		if( !$user->pivot->is_dm )
+		{
+			$resourcesQuery
+				->whereHas(
+					'command_by',
+					function(Builder $query)
+					{
+						$query->whereKey(\Auth::id());
+					}
+				);
+		}
+
 		return [
 			'campaign' => $campaign->load('quests', 'quests.steps', 'quests.comments', 'quests.comments.user', 'quests.comments.resource'),
 			'user' => [
 				'id' => $user->id,
 				'isDM' => $user->pivot->is_dm,
 			],
+			'resources' => $resourcesQuery->get(),
 		];
 	}
 }

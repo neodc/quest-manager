@@ -3120,6 +3120,10 @@ h6 small {
   border-color: #a7342d;
 }
 
+.is-inline {
+  display: inline;
+}
+
 /**
 From https://github.com/hfg-gmuend/openmoji
  */
@@ -3141,6 +3145,15 @@ From https://github.com/hfg-gmuend/openmoji
 i {
   font-style: normal;
   font-family: OpenMojiColor, OpenMojiBlack, apple color emoji, segoe ui emoji, noto color emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol, sans-serif;
+}
+
+i.no-color {
+  font-family: OpenMojiBlack, segoe ui emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol, sans-serif;
+}
+
+textarea.is-fullwidth {
+  width: 100%;
+  resize: vertical;
 }
 
 .paper-btn {

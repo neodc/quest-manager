@@ -4,7 +4,11 @@
 @section('body')
 <div id="app" class="play-container">
 	<h2>{{ $campaign->name }}</h2>
-	<play :url_update="'{{ route('api.campaign.detail', [$campaign]) }}'"></play>
+	<play
+		:url_update="'{{ route('api.campaign.detail', [$campaign]) }}'"
+		:url_edit_step="'{{ route('api.step.edit', [':step']) }}'"
+		:url_edit_comment="'{{ route('api.comment.edit', [':comment']) }}'"
+	></play>
 	{{--<div class="play-space">
 		<div class="play-quest-list">
 			<ul>

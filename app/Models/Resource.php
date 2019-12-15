@@ -48,6 +48,6 @@ class Resource extends Model
 
 	public function command_by()
 	{
-		return $this->belongsToMany(User::class);
+		return $this->belongsToMany(User::class, 'user_can_talk_as_resource');
 	}
 }

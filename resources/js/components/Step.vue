@@ -1,7 +1,8 @@
 <template>
 	<div class="play-step" :class="'state-' + step.state">
 		<h4>
-			{{ step.name }}
+			<input v-if="editing" v-model="editedStep.name" class="is-inline">
+			<template v-else>{{ step.name }}</template>
 			<span class="play-step-actions-player">
 				<a
 					v-if="step.state === 'todo' || showSelectState"
@@ -34,14 +35,19 @@
 				</template>
 			</span>
 			<span v-if="user.isDM" class="play-step-actions-dm">
-				<a title="edit" @click="edit"><i>✏️</i></a>
-				<a title="delete" @click="remove"><i>❌</i></a>
+				<a v-if="editing" title="validate" @click="validateEdit"><i>✅️</i></a>
+				<a v-else title="edit" @click="edit"><i>✏️</i></a>
+
+				<a v-if="editing" title="cancel" @click="cancelEdit"><i>❌</i></a>
+				<a v-else title="delete" @click="remove"><i class="no-color">🗑️</i></a>
 			</span>
 		</h4>
-		<div class="player-content" v-html="step.player_content"></div>
-		<div v-if="step.dm_content && user.isDM" class="dm-content">
+		<textarea v-if="editing" v-model="editedStep.player_content" class="is-fullwidth"></textarea>
+		<div v-else class="player-content" v-html="step.player_content_html"></div>
+		<div v-if="(step.dm_content || editing) && user.isDM" class="dm-content">
 			<hr>
-			<div v-html="step.dm_content"></div>
+			<textarea v-if="editing" v-model="editedStep.dm_content" class="is-fullwidth"></textarea>
+			<div v-else v-html="step.dm_content_html"></div>
 		</div>
 	</div>
 </template>
@@ -61,6 +67,8 @@
 		data() {
         	return {
         		showSelectState: false,
+				editing: false,
+				editedStep: null,
 			};
 		},
 		methods: {
@@ -84,7 +92,15 @@
 				// TODO
 			},
 			edit() {
-				// TODO
+				this.editedStep = _.cloneDeep(this.step);
+				this.editing = true;
+			},
+			validateEdit() {
+				this.$emit('edited', this.editedStep);
+				this.editing = false;
+			},
+			cancelEdit() {
+				this.editing = false;
 			},
 			remove() {
 				// TODO

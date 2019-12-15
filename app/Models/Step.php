@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_visible
  * @property-read Collection|Comment[] $comments
  * @property-read Quest $quest
+ * @property-read string $player_content_html
+ * @property-read string $dm_content_html
  */
 class Step extends Model
 {
@@ -33,6 +35,11 @@ class Step extends Model
 		'is_visible',
 	];
 
+	protected $appends = [
+		'player_content_html',
+		'dm_content_html',
+	];
+
 	protected $casts = [
 		'is_visible' => 'boolean',
 	];
@@ -45,5 +52,15 @@ class Step extends Model
 	public function comments()
 	{
 		return $this->hasMany(Comment::class);
+	}
+
+	public function getPlayerContentHtmlAttribute()
+	{
+		return \Parsedown::instance()->text($this->player_content);
+	}
+
+	public function getDmContentHtmlAttribute()
+	{
+		return \Parsedown::instance()->text($this->dm_content);
 	}
 }

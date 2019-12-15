@@ -19,7 +19,14 @@
 				Add more
 			</a>
 		</div>
-		<quest v-if="currentQuest !== null" :quest="currentQuest" :user="user"/>
+		<quest
+			v-if="currentQuest !== null"
+			:quest="currentQuest"
+			:user="user"
+			:resources="resources"
+			@step-edited="stepEdited"
+			@comment-edited="commentEdited"
+		/>
     </div>
 </template>
 
@@ -30,11 +37,20 @@
 				type: String,
 				required: true,
 			},
+			url_edit_step: {
+				type: String,
+				required: true,
+			},
+			url_edit_comment: {
+				type: String,
+				required: true,
+			},
         },
 		data() {
         	return {
 				campaign: null,
 				user: null,
+				resources: null,
 				currentQuestId: parseInt(location.hash.slice(1)),
 			};
 		},
@@ -53,15 +69,45 @@
 			},
 		},
 		methods: {
+        	async load() {
+        		// TODO add loader
+				// TODO add error catch
+				const data = (await axios.get(this.url_update)).data;
+
+				this.campaign = data.campaign;
+				this.user = data.user;
+				this.resources = data.resources;
+			},
         	addQuest() {
         		// TODO
 			},
+			async stepEdited(step) {
+				axios
+					.post(
+						this.url_edit_step.replace(':step', step.id),
+						{
+							name: step.name,
+							player_content: step.player_content,
+							dm_content: step.dm_content,
+						}
+					)
+					.then(this.load);
+			},
+			async commentEdited(comment) {
+				axios
+					.post(
+						this.url_edit_comment.replace(':comment', comment.id),
+						{
+							resource_id: comment.resource_id,
+							player_text: comment.player_text,
+							dm_text: comment.dm_text,
+						}
+					)
+					.then(this.load);
+			},
 		},
-		async created() {
-			const data = (await axios.get(this.url_update)).data;
-
-			this.campaign = data.campaign;
-			this.user = data.user;
+		created() {
+			this.load();
 		}
 	}
 </script>

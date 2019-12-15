@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read Resource|null $resource
  * @property-read Step|null $step
  * @property-read User|null $user
+ * @property-read string $player_text_html
+ * @property-read string $dm_text_html
  */
 class Comment extends Model
 {
@@ -37,6 +39,11 @@ class Comment extends Model
 
 	protected $casts = [
 		'is_visible' => 'boolean',
+	];
+
+	protected $appends = [
+		'player_text_html',
+		'dm_text_html',
 	];
 
 	public function quest()
@@ -57,5 +64,15 @@ class Comment extends Model
 	public function resource()
 	{
 		return $this->belongsTo(Resource::class);
+	}
+
+	public function getPlayerTextHtmlAttribute()
+	{
+		return \Parsedown::instance()->text($this->player_text);
+	}
+
+	public function getDmTextHtmlAttribute()
+	{
+		return \Parsedown::instance()->text($this->dm_text);
 	}
 }

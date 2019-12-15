@@ -1,5 +1,10 @@
 @import 'openmoji';
 
+textarea.is-fullwidth {
+	width: 100%;
+	resize: vertical;
+}
+
 .paper-btn {
 	background-color: $main-background;
 }

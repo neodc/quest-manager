@@ -1,7 +1,17 @@
 <template>
 	<div class="play-comment" :class="'type-' + comment.type">
 		<h5>
-			{{ name }}
+			<template v-if="editing">
+				<template v-if="comment.type === 'message'">
+					<label :for="'talk-as-' + comment.id">Talk as:</label>
+					<select v-model="editedComment.resource_id" :id="'talk-as-' + comment.id" class="is-inline">
+						<option :value="null">---</option>
+						<option v-for="resource in resources" :value="resource.id">{{ resource.name }}</option>
+					</select>
+				</template>
+				<textarea v-else v-model="editedComment.player_text" class="is-fullwidth"></textarea>
+			</template>
+			<template v-else>{{ name }}</template>
 			<span class="play-step-actions-player">
 				<a v-if="comment.step_id !== null" @mouseover="showStep" @mouseleave="hoverStep = null">
 					<i>⤴️</i>
@@ -13,18 +23,23 @@
 				</template>
 			</span>
 			<span v-if="canEdit" class="play-step-actions-dm">
-				<a title="edit" @click="edit"><i>✏️</i></a>
-				<a title="delete" @click="remove"><i>❌</i></a>
+				<a v-if="editing" title="validate" @click="validateEdit"><i>✅️</i></a>
+				<a v-else title="edit" @click="edit"><i>✏️</i></a>
+
+				<a v-if="editing" title="cancel" @click="cancelEdit"><i>❌</i></a>
+				<a v-else title="delete" @click="remove"><i class="no-color">🗑️</i></a>
 			</span>
 			<br>
 			<small>{{ comment.created_at }}</small>
 		</h5>
 
 		<template v-if="comment.type === 'message'">
-			<div class="player-content" v-html="comment.player_text"></div>
-			<div v-if="comment.dm_text && user.isDM" class="dm-content">
+			<textarea v-if="editing" v-model="editedComment.player_text" class="is-fullwidth"></textarea>
+			<div v-else class="player-content" v-html="comment.player_text_html"></div>
+			<div v-if="(comment.dm_text || editing) && user.isDM" class="dm-content">
 				<hr>
-				<div v-html="comment.dm_text"></div>
+				<textarea v-if="editing" v-model="editedComment.dm_text" class="is-fullwidth"></textarea>
+				<div v-else v-html="comment.dm_text_html"></div>
 			</div>
 		</template>
 		<div
@@ -46,10 +61,16 @@
 				type: Object,
 				required: true,
 			},
+			resources: {
+				type: Array,
+				required: true,
+			},
         },
 		data() {
         	return {
 				hoverStep: null,
+				editing: false,
+				editedComment: null,
 			};
 		},
 		computed: {
@@ -80,7 +101,15 @@
 				// TODO
 			},
 			edit() {
-				// TODO
+				this.editedComment = _.cloneDeep(this.comment);
+				this.editing = true;
+			},
+			validateEdit() {
+				this.$emit('edited', this.editedComment);
+				this.editing = false;
+			},
+			cancelEdit() {
+				this.editing = false;
 			},
 			remove() {
 				// TODO

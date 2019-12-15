@@ -73,6 +73,6 @@ class User extends Authenticatable
 
 	public function can_talk_has()
 	{
-		return $this->belongsToMany(Resource::class);
+		return $this->belongsToMany(Resource::class, 'user_can_talk_as_resource');
 	}
 }

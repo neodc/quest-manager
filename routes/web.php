@@ -14,7 +14,9 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StepController;
 use Illuminate\Routing\Router;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -37,5 +39,7 @@ Route::group(
 		$route->get('/campaign/{campaign}/play', [CampaignController::class, 'play'])->name('campaign.play');
 
 		$route->get('/api/campaigns/{campaign}', [CampaignController::class, 'get'])->name('api.campaign.detail');
+		$route->post('/api/step/{step}', [StepController::class, 'edit'])->name('api.step.edit');
+		$route->post('/api/comment/{comment}', [CommentController::class, 'edit'])->name('api.comment.edit');
 	}
 );
