@@ -37,6 +37,13 @@ Route::group(
 		$route->get('/campaign', [CampaignController::class, 'list'])->name('campaign.list');
 		$route->get('/campaign/create', [CampaignController::class, 'getCreate'])->name('campaign.create');
 		$route->post('/campaign/create', [CampaignController::class, 'postCreate']);
+		$route->get('/campaign/{campaign}/edit', [CampaignController::class, 'getEdit'])->name('campaign.edit');
+		$route->post('/campaign/{campaign}/edit', [CampaignController::class, 'postEdit']);
+		$route->post('/campaign/{campaign}/invite', [CampaignController::class, 'invite'])->name('campaign.invite');
+		$route->get('/campaign/{campaign}/add-player/{user}', [CampaignController::class, 'addPlayer'])->name('campaign.add-player');
+		$route->get('/campaign/{campaign}/remove-player/{user}', [CampaignController::class, 'removePlayer'])->name('campaign.remove-player');
+		$route->get('/campaign/{campaign}/set-dm/{user}', [CampaignController::class, 'setDm'])->name('campaign.dm.set');
+		$route->get('/campaign/{campaign}/unset-dm/{user}', [CampaignController::class, 'unsetDm'])->name('campaign.dm.unset');
 		$route->get('/campaign/{campaign}/play', [CampaignController::class, 'play'])->name('campaign.play');
 
 		$route->get('/api/campaigns/{campaign}', [CampaignController::class, 'get'])->name('api.campaign.detail');

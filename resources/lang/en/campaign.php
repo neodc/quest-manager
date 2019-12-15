@@ -9,9 +9,19 @@ return [
 		],
 	],
 	'create' => [
-		'title' => 'Create you campaign',
+		'title' => 'Create your campaign',
 		'name' => 'Name:',
 		'submit' => 'Create',
+	],
+	'edit' => [
+		'title' => 'Edit your campaign',
+		'name' => 'Name',
+		'submit' => 'edit',
+		'access' => 'Access',
+		'invite' => [
+			'placeholder' => 'foo@bar.com',
+			'submit' => 'Invite',
+		],
 	],
 	'play' => [
 
