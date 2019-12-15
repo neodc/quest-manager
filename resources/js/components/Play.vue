@@ -25,7 +25,10 @@
 			:user="user"
 			:resources="resources"
 			@step-edited="stepEdited"
+			@step-visibility-change="stepVisibilityChange"
+			@step-state-change="stepStateChange"
 			@comment-edited="commentEdited"
+			@comment-visibility-change="commentVisibilityChange"
 		/>
     </div>
 </template>
@@ -41,7 +44,19 @@
 				type: String,
 				required: true,
 			},
+			url_visibility_step: {
+				type: String,
+				required: true,
+			},
+			url_state_step: {
+				type: String,
+				required: true,
+			},
 			url_edit_comment: {
+				type: String,
+				required: true,
+			},
+			url_visibility_comment: {
 				type: String,
 				required: true,
 			},
@@ -93,6 +108,26 @@
 					)
 					.then(this.load);
 			},
+			async stepVisibilityChange(step) {
+				axios
+					.put(
+						this.url_visibility_step.replace(':step', step.id),
+						{
+							is_visible: step.is_visible,
+						}
+					)
+					.then(this.load);
+			},
+			async stepStateChange(step) {
+				axios
+					.put(
+						this.url_state_step.replace(':step', step.id),
+						{
+							state: step.state,
+						}
+					)
+					.then(this.load);
+			},
 			async commentEdited(comment) {
 				axios
 					.post(
@@ -101,6 +136,16 @@
 							resource_id: comment.resource_id,
 							player_text: comment.player_text,
 							dm_text: comment.dm_text,
+						}
+					)
+					.then(this.load);
+			},
+			async commentVisibilityChange(comment) {
+				axios
+					.put(
+						this.url_visibility_comment.replace(':comment', comment.id),
+						{
+							is_visible: comment.is_visible,
 						}
 					)
 					.then(this.load);

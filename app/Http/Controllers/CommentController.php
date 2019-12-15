@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EditComment;
+use App\Http\Requests\VisibilityComment;
 use App\Models\Comment;
 use App\Models\Resource;
 use App\Rules\Exists;
@@ -25,6 +26,13 @@ class CommentController extends Controller
 		$comment->resource_id = $request->resource_id;
 		$comment->player_text = $request->player_text;
 		$comment->dm_text= $request->dm_text ?? '';
+
+		$comment->save();
+	}
+
+	public function visibility(Comment $comment, VisibilityComment $request)
+	{
+		$comment->is_visible = $request->is_visible;
 
 		$comment->save();
 	}

@@ -39,7 +39,12 @@ Route::group(
 		$route->get('/campaign/{campaign}/play', [CampaignController::class, 'play'])->name('campaign.play');
 
 		$route->get('/api/campaigns/{campaign}', [CampaignController::class, 'get'])->name('api.campaign.detail');
+
 		$route->post('/api/step/{step}', [StepController::class, 'edit'])->name('api.step.edit');
+		$route->put('/api/step/{step}/visibility', [StepController::class, 'visibility'])->name('api.step.visibility');
+		$route->put('/api/step/{step}/state', [StepController::class, 'state'])->name('api.step.state');
+
 		$route->post('/api/comment/{comment}', [CommentController::class, 'edit'])->name('api.comment.edit');
+		$route->put('/api/comment/{comment}/visibility', [CommentController::class, 'visibility'])->name('api.comment.visibility');
 	}
 );

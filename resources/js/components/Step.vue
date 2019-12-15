@@ -83,13 +83,17 @@
 				}
 
 				this.showSelectState = false;
-				// TODO
+
+				if( state !== this.step.state ) {
+					this.$emit('state-change', {id: this.step.id, state: state});
+				}
 			},
 			toggleVisibility() {
 				if(!this.user.isDM) {
 					return;
 				}
-				// TODO
+
+				this.$emit('visibility-change', {id: this.step.id, is_visible: !this.step.is_visible});
 			},
 			edit() {
 				this.editedStep = _.cloneDeep(this.step);

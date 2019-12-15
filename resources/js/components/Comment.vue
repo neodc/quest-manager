@@ -98,7 +98,7 @@
 		},
 		methods: {
 			toggleVisibility() {
-				// TODO
+				this.$emit('visibility-change', {id: this.comment.id, is_visible: !this.comment.is_visible});
 			},
 			edit() {
 				this.editedComment = _.cloneDeep(this.comment);

@@ -4,6 +4,8 @@
 			<step
 				v-for="step in quest.steps"
 				@edited="$emit('step-edited', $event)"
+				@visibility-change="$emit('step-visibility-change', $event)"
+				@state-change="$emit('step-state-change', $event)"
 				:step="step"
 				:user="user"
 				:key="step.id"
@@ -20,6 +22,7 @@
 			<comment
 				v-for="comment in quest.comments"
 				@edited="$emit('comment-edited', $event)"
+				@visibility-change="$emit('comment-visibility-change', $event)"
 				:comment="comment"
 				:user="user"
 				:key="comment.id"
