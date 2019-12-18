@@ -5,7 +5,7 @@
 				<template v-if="comment.type === 'message'">
 					<label :for="'talk-as-' + comment.id">Talk as:</label>
 					<select v-model="editedComment.resource_id" :id="'talk-as-' + comment.id" class="is-inline">
-						<option :value="null">---</option>
+						<option :value="null">{{ editedComment.user ? editedComment.user.name : 'Deleted' }}</option>
 						<option v-for="resource in resources" :value="resource.id">{{ resource.name }}</option>
 					</select>
 				</template>

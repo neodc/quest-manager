@@ -9,7 +9,7 @@
 					>
 						{{ quest.name }}
 					</a>
-					<a v-if="quest.id === currentQuestId" title="delete" @click="questDelete(quest)">
+					<a v-if="quest.id === currentQuestId && user.isDM" title="delete" @click="questDelete(quest)">
 						<i class="no-color">🗑️</i>
 					</a>
 				</li>

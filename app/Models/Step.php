@@ -61,6 +61,10 @@ class Step extends Model
 
 	public function getDmContentHtmlAttribute()
 	{
+		if( $this->dm_content === null ){
+			return null;
+		}
+
 		return \Parsedown::instance()->text($this->dm_content);
 	}
 }

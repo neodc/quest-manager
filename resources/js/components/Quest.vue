@@ -102,7 +102,7 @@
 								id="add-comment-talk-as"
 								class="is-fullwidth"
 							>
-								<option :value="null">---</option>
+								<option :value="null">{{ user.name }}</option>
 								<option v-for="resource in resources" :value="resource.id">{{ resource.name }}</option>
 							</select>
 						</div>

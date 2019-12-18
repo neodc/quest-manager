@@ -73,6 +73,10 @@ class Comment extends Model
 
 	public function getDmTextHtmlAttribute()
 	{
+		if( $this->dm_text === null ){
+			return null;
+		}
+
 		return \Parsedown::instance()->text($this->dm_text);
 	}
 }

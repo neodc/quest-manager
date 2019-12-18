@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $campaign_id
  * @property string $name
- * @property string $icon
+ * @property bool $is_visible
  * @property-read Campaign $campaign
  * @property-read Collection|Comment[] $comments
  * @property-read Collection|Step[] $steps
@@ -25,7 +25,11 @@ class Quest extends Model
 	 */
 	protected $fillable = [
 		'name',
-		'icon',
+		'is_visible',
+	];
+
+	protected $casts = [
+		'is_visible' => 'boolean',
 	];
 
 	public function campaign()

@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Campaign;
+use App\Models\Comment;
+use App\Models\Quest;
+use App\Models\Step;
+use App\Policies\CampaignPolicy;
+use App\Policies\CommentPolicy;
+use App\Policies\QuestPolicy;
+use App\Policies\StepPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +21,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+		Campaign::class => CampaignPolicy::class,
+		Quest::class => QuestPolicy::class,
+		Step::class => StepPolicy::class,
+		Comment::class => CommentPolicy::class,
     ];
 
     /**
