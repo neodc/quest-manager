@@ -37,6 +37,8 @@ class CampaignController extends Controller
 
 	public function getEdit(Campaign $campaign)
 	{
+		// TODO only dm
+
 		return view(
 			'campaign.edit',
 			[
@@ -48,32 +50,29 @@ class CampaignController extends Controller
 
 	public function postEdit(Campaign $campaign, CreateCampaign $request)
 	{
+		// TODO only dm
+
 		$campaign->name = $request->get('name');
 
 		$campaign->save();
 	}
 
-	public function invite(Campaign $campaign, InviteCampaign $request)
+	public function resetLink(Campaign $campaign)
 	{
-		$user = User::query()->where('email', $request->get('email'))->first();
+		// TODO only dm
 
-		if( $user !== null )
-		{
-			return redirect()->route('campaign.add-player', [$campaign, $user]);
-		}
+		$campaign->generateInviteId();
+		$campaign->save();
 
-		// TODO send invite email
-	}
-
-	public function addPlayer(Campaign $campaign, User $user)
-	{
-		$campaign->users()->attach($user, ['is_dm' => false]);
+		// TODO add flash
 
 		return redirect()->route('campaign.edit', $campaign);
 	}
 
 	public function removePlayer(Campaign $campaign, User $user)
 	{
+		// TODO only dm
+
 		$campaign->users()->detach($user);
 
 		return redirect()->route('campaign.edit', $campaign);
@@ -81,6 +80,8 @@ class CampaignController extends Controller
 
 	public function setDm(Campaign $campaign, User $user)
 	{
+		// TODO only dm
+
 		$campaign->users()->syncWithoutDetaching([
 			$user->id => ['is_dm' => true],
 		]);
@@ -90,6 +91,8 @@ class CampaignController extends Controller
 
 	public function unsetDm(Campaign $campaign, User $user)
 	{
+		// TODO only dm
+
 		$campaign->users()->syncWithoutDetaching([
 			$user->id => ['is_dm' => false],
 		]);

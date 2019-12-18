@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\StepController;
 use Illuminate\Routing\Router;
@@ -34,12 +35,14 @@ Route::group(
 	['middleware' => ['auth']],
 	function (Router $route)
 	{
+		$route->get('/invite/{invite_id}', [InviteController::class, 'invite'])->name('invite');
+
 		$route->get('/campaign', [CampaignController::class, 'list'])->name('campaign.list');
 		$route->get('/campaign/create', [CampaignController::class, 'getCreate'])->name('campaign.create');
 		$route->post('/campaign/create', [CampaignController::class, 'postCreate']);
 		$route->get('/campaign/{campaign}/edit', [CampaignController::class, 'getEdit'])->name('campaign.edit');
 		$route->post('/campaign/{campaign}/edit', [CampaignController::class, 'postEdit']);
-		$route->post('/campaign/{campaign}/invite', [CampaignController::class, 'invite'])->name('campaign.invite');
+		$route->get('/campaign/{campaign}/reset-link', [CampaignController::class, 'resetLink'])->name('campaign.reset-link');
 		$route->get('/campaign/{campaign}/add-player/{user}', [CampaignController::class, 'addPlayer'])->name('campaign.add-player');
 		$route->get('/campaign/{campaign}/remove-player/{user}', [CampaignController::class, 'removePlayer'])->name('campaign.remove-player');
 		$route->get('/campaign/{campaign}/set-dm/{user}', [CampaignController::class, 'setDm'])->name('campaign.dm.set');

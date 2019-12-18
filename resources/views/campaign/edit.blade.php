@@ -50,19 +50,33 @@
 				</tr>
 			@endforeach
 		</table>
-		<form method="post" action="{{ route('campaign.invite', [$campaign]) }}">
-			{!! csrf_field() !!}
-			<div class="form-group @if($errors->has('email')) has-error @endif">
-				<input type="email" name="email" required="required" value="{{ old('email') }}" class="is-inline" placeholder="@lang('campaign.edit.invite.placeholder')">
-				<input type="submit" value="@lang('campaign.edit.invite.submit')" class="is-inline">
-				@if($errors->has('email'))
-					<ul class="form-errors">
-						@foreach($errors->get('email') as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				@endif
+		<p>
+			<label class="paper-btn margin" for="modal-invite">
+				@lang('campaign.edit.invite.open_modal')
+			</label>
+		</p>
+
+		<input class="modal-state" id="modal-invite" type="checkbox">
+		<div class="modal">
+			<label class="modal-bg" for="modal-invite"></label>
+			<div class="modal-body">
+				<label class="btn-close" for="modal-invite">X</label>
+				<h4 class="modal-title">
+					@lang('campaign.edit.invite.modal_title')
+				</h4>
+				<div class="form-group">
+					<label for="invitation-url">@lang('campaign.edit.invite.instruction')</label>
+					<input id="invitation-url" class="input-block" type="text" value="{{ route('invite', $campaign->invite_id) }}">
+				</div>
+				<p>
+					<small>
+						@lang('campaign.edit.invite.reset_instruction')
+						<a href="{{ route('campaign.reset-link', $campaign) }}" class="paper-btn btn-danger btn-small">
+							@lang('campaign.edit.invite.reset_btn')
+						</a>
+					</small>
+				</p>
 			</div>
-		</form>
+		</div>
 	</div>
 @endsection

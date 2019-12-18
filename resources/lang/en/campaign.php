@@ -19,8 +19,11 @@ return [
 		'submit' => 'edit',
 		'access' => 'Access',
 		'invite' => [
-			'placeholder' => 'foo@bar.com',
-			'submit' => 'Invite',
+			'open_modal' => 'Invite more',
+			'modal_title' => 'Invite players',
+			'instruction' => 'Send this invitation link to your player',
+			'reset_instruction' => 'If you want a new link you can reset here (the previous link will no longer be usable)',
+			'reset_btn' => 'Reset link',
 		],
 	],
 	'play' => [
