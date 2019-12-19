@@ -11,6 +11,12 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+use App\Models\Campaign;
+use App\Models\User;
+
+Broadcast::channel('campaign-player.{campaign}', function (User $user, Campaign $campaign) {
+    return $campaign->users()->newPivotStatementForId($user->getKey())->exists();
+});
+Broadcast::channel('campaign-dm.{campaign}', function (User $user, Campaign $campaign) {
+    return $campaign->users()->newPivotStatementForId($user->getKey())->where('is_dm', true)->exists();
 });

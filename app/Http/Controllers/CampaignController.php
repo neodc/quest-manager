@@ -6,9 +6,7 @@ use App\Http\Requests\CreateCampaign;
 use App\Http\Requests\InviteCampaign;
 use App\Models\Campaign;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Services\CampaignService;
 
 class CampaignController extends Controller
 {
@@ -106,74 +104,22 @@ class CampaignController extends Controller
 	{
 		$this->authorize('view', $campaign);
 
+		$isDm = $campaign->users()->newPivotStatementForId(\Auth::id())->where('is_dm', true)->exists();
+
 		return view(
 			'campaign.play',
 			[
 				'needJs' => true,
 				'campaign' => $campaign,
+				'channel' => 'campaign-' . ($isDm ? 'dm' : 'player') . '.' . $campaign->id,
 			]
 		);
 	}
 
-	public function get(Campaign $campaign)
+	public function get(Campaign $campaign, CampaignService $campaignDataService)
 	{
 		$this->authorize('view', $campaign);
 
-		/** @var User $user */
-		$user = $campaign->users()->find(\Auth::id());
-		$isDm = $user->pivot->is_dm;
-
-		$resourcesQuery = $campaign->resources();
-
-		$relations = ['quests', 'quests.steps', 'quests.comments', 'quests.comments.user', 'quests.comments.resource'];
-
-		if(!$isDm)
-		{
-			$resourcesQuery
-				->whereHas(
-					'command_by',
-					function(Builder $query)
-					{
-						$query->whereKey(\Auth::id());
-					}
-				);
-
-			$relations = [
-				'quests' => function(HasMany $query){
-					$query
-						->where('is_visible', true)
-						->select(['id', 'campaign_id', 'name'])
-					;
-				},
-				'quests.steps' => function(HasMany $query){
-					$query
-						->where('is_visible', true)
-						->select(['id', 'quest_id', 'name', 'player_content', 'state'])
-					;
-				},
-				'quests.comments' => function(HasMany $query){
-					$query
-						->where('is_visible', true)
-						->select(['id', 'quest_id', 'step_id', 'user_id', 'resource_id', 'player_text', 'type', 'created_at'])
-					;
-				},
-				'quests.comments.user' => function(BelongsTo $query){
-					$query->select(['id', 'name']);
-				},
-				'quests.comments.resource' => function(BelongsTo $query){
-					$query->select(['id', 'name']);
-				},
-			];
-		}
-
-		return [
-			'campaign' => $campaign->load($relations)->only(['id', 'name', 'quests']),
-			'user' => [
-				'id' => $user->id,
-				'name' => $user->name,
-				'isDM' => $isDm,
-			],
-			'resources' => $resourcesQuery->get(),
-		];
+		return $campaignDataService->getDataToClientForUser($campaign, \Auth::user());
 	}
 }

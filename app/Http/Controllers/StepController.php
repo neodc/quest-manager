@@ -9,11 +9,12 @@ use App\Http\Requests\VisibilityStep;
 use App\Models\Campaign;
 use App\Models\Quest;
 use App\Models\Step;
+use App\Services\CampaignService;
 use Illuminate\Database\Eloquent\Builder;
 
 class StepController extends Controller
 {
-	public function add(AddStep $request)
+	public function add(AddStep $request, CampaignService $campaignService)
 	{
 		$campaign = Campaign::whereHas(
 			'quests',
@@ -37,9 +38,11 @@ class StepController extends Controller
 					'state' => 'todo',
 				]
 			);
+
+		$campaignService->broadcastUpdate($campaign->id);
 	}
 
-	public function edit(Step $step, EditStep $request)
+	public function edit(Step $step, EditStep $request, CampaignService $campaignService)
 	{
 		$this->authorize('update', $step);
 
@@ -48,30 +51,38 @@ class StepController extends Controller
 		$step->dm_content = $request->dm_content ?? '';
 
 		$step->save();
+
+		$campaignService->broadcastUpdate($step->quest->campaign_id);
 	}
 
-	public function delete(Step $step)
+	public function delete(Step $step, CampaignService $campaignService)
 	{
 		$this->authorize('update', $step);
 
 		$step->delete();
+
+		$campaignService->broadcastUpdate($step->quest->campaign_id);
 	}
 
-	public function visibility(Step $step, VisibilityStep $request)
+	public function visibility(Step $step, VisibilityStep $request, CampaignService $campaignService)
 	{
 		$this->authorize('update', $step);
 
 		$step->is_visible = $request->is_visible;
 
 		$step->save();
+
+		$campaignService->broadcastUpdate($step->quest->campaign_id);
 	}
 
-	public function state(Step $step, StateStep $request)
+	public function state(Step $step, StateStep $request, CampaignService $campaignService)
 	{
 		$this->authorize('update', $step);
 
 		$step->state = $request->state;
 
 		$step->save();
+
+		$campaignService->broadcastUpdate($step->quest->campaign_id);
 	}
 }

@@ -67,6 +67,10 @@
 <script>
     export default {
         props: {
+			broadcast_channel: {
+				type: String,
+				required: true,
+			},
 			url_update: {
 				type: String,
 				required: true,
@@ -245,6 +249,16 @@
 		},
 		created() {
 			this.load();
+			let self = this;
+
+			Echo.private(this.broadcast_channel)
+				.listen(
+					'CampaignUpdated',
+					function (e) {
+						self.campaign = e.campaign;
+						self.resources = e.resources;
+					}
+				);
 		}
 	}
 </script>

@@ -5,6 +5,7 @@
 <div id="app" class="play-container">
 	<h2>{{ $campaign->name }}</h2>
 	<play
+		:broadcast_channel="'{{ $channel }}'"
 		:url_update="'{{ route('api.campaign.detail', [$campaign]) }}'"
 		:url_quest_add="'{{ route('api.quest.add') }}'"
 		:url_quest="'{{ route('api.quest.delete', [':quest']) }}'"
