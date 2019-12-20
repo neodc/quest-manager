@@ -55,6 +55,10 @@ class CampaignController extends Controller
 		$campaign->name = $request->get('name');
 
 		$campaign->save();
+
+		return redirect()
+			->route('campaign.edit', $campaign)
+			->with('status', trans('campaign.edit.success'));
 	}
 
 	public function resetLink(Campaign $campaign)
@@ -64,9 +68,9 @@ class CampaignController extends Controller
 		$campaign->generateInviteId();
 		$campaign->save();
 
-		// TODO add flash
-
-		return redirect()->route('campaign.edit', $campaign);
+		return redirect()
+			->route('campaign.edit', $campaign)
+			->with('status', trans('campaign.edit.invite.success'));
 	}
 
 	public function removePlayer(Campaign $campaign, User $user)

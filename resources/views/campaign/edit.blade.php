@@ -5,17 +5,17 @@
 	<h2>@lang('campaign.edit.title')</h2>
 	<div id="app">
 		<form method="post" class="margin-bottom">
-			{!! csrf_field() !!}
-			<div class="form-group @if($errors->has('name')) has-error @endif">
+			@csrf
+			<div class="form-group @error('name') has-error @enderror">
 				<label for="name">@lang('campaign.edit.name')</label>
-				<input type="text" id="name" name="name" value="{{ old('name', $campaign->name) }}">
-				@if($errors->has('name'))
+				<input type="text" id="name" name="name" value="{{ old('name', $campaign->name) }}" required>
+				@error('name')
 					<ul class="form-errors">
 						@foreach($errors->get('name') as $error)
 							<li>{{ $error }}</li>
 						@endforeach
 					</ul>
-				@endif
+				@enderror
 			</div>
 			<input type="submit" class="paper-btn btn-secondary" value="@lang('campaign.edit.submit')"/>
 		</form>

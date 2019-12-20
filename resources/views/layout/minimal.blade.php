@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
-	<title>Document</title>
+	<title>{{ config('app.name') }}</title>
 </head>
 <body>
 @if(isset($needJs) && $needJs)

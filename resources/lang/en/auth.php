@@ -21,6 +21,20 @@ return [
 		'email' => 'Email:',
 		'password' => 'Password:',
 		'submit' => 'Login',
+		'forgot' => 'Forgot password?',
+	],
+	'forgot-password' => [
+		'title' => 'Forgot Password',
+		'email' => 'Email:',
+		'submit' => 'Send reset password email',
+		'login' => 'Get back to login',
+	],
+	'reset-password' => [
+		'title' => 'Reset Password',
+		'email' => 'Email:',
+		'password' => 'New password:',
+		'password_confirmation' => 'Confirm password:',
+		'submit' => 'Reset password',
 	],
 	'register' => [
 		'title' => 'Register',

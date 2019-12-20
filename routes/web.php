@@ -11,8 +11,10 @@
 |
 */
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
@@ -30,6 +32,12 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+
+Route::get('/password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.forgot');
+Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+
+Route::get('/password/reset', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
 Route::group(
 	['middleware' => ['auth']],

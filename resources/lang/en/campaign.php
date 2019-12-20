@@ -18,12 +18,15 @@ return [
 		'name' => 'Name',
 		'submit' => 'edit',
 		'access' => 'Access',
+		'success' => 'Your campaign has been updated',
 		'invite' => [
 			'open_modal' => 'Invite more',
 			'modal_title' => 'Invite players',
 			'instruction' => 'Send this invitation link to your player',
 			'reset_instruction' => 'If you want a new link you can reset here (the previous link will no longer be usable)',
 			'reset_btn' => 'Reset link',
+			'success' => 'Your campaign invitation link has been reset',
+			'joined' => 'You have gain access to ":name"',
 		],
 	],
 	'play' => [

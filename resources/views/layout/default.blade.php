@@ -28,6 +28,12 @@
 	</div>
 </nav>
 <div class="paper container">
+	@if (session('status'))
+		<div class="alert alert-success" role="alert">
+			{{ session('status') }}
+		</div>
+	@endif
+
 	@yield('content')
 </div>
 @endsection

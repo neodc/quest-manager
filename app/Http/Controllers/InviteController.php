@@ -23,8 +23,8 @@ class InviteController extends Controller
 			$relation->attach($user, ['is_dm' => false]);
 		}
 
-		// TODO flash
-
-		return redirect()->route('campaign.list');
+		return redirect()
+			->route('campaign.list')
+			->with('status', trans('campaign.edit.invite.joined', ['name' => $campaign->name]));
 	}
 }
