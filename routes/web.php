@@ -60,7 +60,9 @@ Route::group(
 		$route->get('/api/campaigns/{campaign}', [CampaignController::class, 'get'])->name('api.campaign.detail');
 
 		$route->post('/api/quest', [QuestController::class, 'add'])->name('api.quest.add');
+		$route->post('/api/quest/{quest}', [QuestController::class, 'edit'])->name('api.quest.edit');
 		$route->delete('/api/quest/{quest}', [QuestController::class, 'delete'])->name('api.quest.delete');
+		$route->put('/api/quest/{quest}/visibility', [QuestController::class, 'visibility'])->name('api.quest.visibility');
 
 		$route->post('/api/step', [StepController::class, 'add'])->name('api.step.add');
 		$route->post('/api/step/{step}', [StepController::class, 'edit'])->name('api.step.edit');

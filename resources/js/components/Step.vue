@@ -3,7 +3,7 @@
 		<h4>
 			<input v-if="editing" v-model="editedStep.name" class="is-inline">
 			<template v-else>{{ step.name }}</template>
-			<span class="play-step-actions-player">
+			<span class="play-actions">
 				<a
 					v-if="step.state === 'todo' || showSelectState"
 					title="todo"
@@ -34,7 +34,7 @@
 					<a v-else title="show" @click="toggleVisibility"><i>🚷</i></a>
 				</template>
 			</span>
-			<span v-if="user.isDM" class="play-step-actions-dm">
+			<span v-if="user.isDM" class="play-actions play-step-actions-dm">
 				<a v-if="editing" title="validate" @click="validateEdit"><i>✅️</i></a>
 				<a v-else title="edit" @click="edit"><i>✏️</i></a>
 

@@ -64,6 +64,10 @@
 	border: 2px solid $primary;
 }
 
+.play-quest-actions {
+	float: right;
+}
+
 .play-step-list {
 	flex: 3;
 
@@ -121,6 +125,13 @@
 	}
 }
 
+.play-actions {
+	a {
+		background-image: none;
+		color: $primary;
+	}
+}
+
 .play-step, .play-comment {
 	border: 1.5px solid $primary;
 	padding: .5rem 1rem;
@@ -163,13 +174,6 @@
 
 		i {
 			font-size: 1rem;
-		}
-	}
-
-	.play-step-actions-dm, .play-step-actions-player {
-		a {
-			background-image: none;
-			color: $primary;
 		}
 	}
 }

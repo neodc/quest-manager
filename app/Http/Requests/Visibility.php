@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class VisibilityComment extends FormRequest
+class Visibility extends FormRequest
 {
 	public function rules()
 	{

@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-class VisibilityStep extends FormRequest
+class EditQuest extends FormRequest
 {
 	public function rules()
 	{
 		return [
-			'is_visible' => 'required|bool',
+            'name' => 'required|string|max:191',
 		];
 	}
 }

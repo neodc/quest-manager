@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddStep;
 use App\Http\Requests\EditStep;
 use App\Http\Requests\StateStep;
-use App\Http\Requests\VisibilityStep;
+use App\Http\Requests\Visibility;
 use App\Models\Campaign;
 use App\Models\Quest;
 use App\Models\Step;
@@ -64,7 +64,7 @@ class StepController extends Controller
 		$campaignService->broadcastUpdate($step->quest->campaign_id);
 	}
 
-	public function visibility(Step $step, VisibilityStep $request, CampaignService $campaignService)
+	public function visibility(Step $step, Visibility $request, CampaignService $campaignService)
 	{
 		$this->authorize('update', $step);
 

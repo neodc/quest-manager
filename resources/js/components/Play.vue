@@ -3,15 +3,31 @@
 		<div class="play-quest-list">
 			<ul>
 				<li v-for="quest in campaign.quests" :class="{'active': quest.id === currentQuestId}">
-					<a
-						:href="'#' + quest.id"
-						@click="currentQuestId = quest.id"
-					>
-						{{ quest.name }}
-					</a>
-					<a v-if="quest.id === currentQuestId && user.isDM" title="delete" @click="questDelete(quest)">
-						<i class="no-color">🗑️</i>
-					</a>
+					<template v-if="quest.id !== currentQuestId || questToEdit === null">
+						<a
+							:href="'#' + quest.id"
+							@click="questSelect(quest)"
+							class="no-link"
+						>
+							{{ quest.name }}
+						</a>
+						<span v-if="quest.id === currentQuestId && user.isDM" class="play-actions play-quest-actions">
+							&nbsp;
+							<a v-if="quest.is_visible" title="hide" @click="questToggleVisibility(quest)"><i>🚹</i></a>
+							<a v-else title="show" @click="questToggleVisibility(quest)"><i>🚷</i></a>
+
+							<a title="edit" @click="questEdit(quest)"><i>✏️</i></a>
+
+							<a title="delete" @click="questDelete(quest)"><i class="no-color">🗑</i></a>
+						</span>
+					</template>
+					<template v-else>
+						<input v-model="questToEdit.name" style="display: inline-block; width: 5.5rem"/>
+						<span v-if="quest.id === currentQuestId && user.isDM" class="play-actions play-quest-actions">
+							<a title="validate" @click="questEditConfirmed(quest)"><i>✅️</i></a>
+							<a title="cancel" @click="questEditCancel"><i>❌</i></a>
+						</span>
+					</template>
 				</li>
 			</ul>
 			<div class="text-center">
@@ -83,6 +99,10 @@
 				type: String,
 				required: true,
 			},
+			url_quest_visibility: {
+				type: String,
+				required: true,
+			},
 			url_step: {
 				type: String,
 				required: true,
@@ -122,6 +142,7 @@
 				questToAdd: {
 					name: '',
 				},
+				questToEdit: null,
 			};
 		},
 		computed: {
@@ -148,6 +169,10 @@
 				this.user = data.user;
 				this.resources = data.resources;
 			},
+			questSelect(quest) {
+        		this.currentQuestId = quest.id;
+        		this.questToEdit = null;
+			},
         	questAdded() {
 				axios
 					.post(
@@ -171,6 +196,32 @@
 					.then(this.load);
 
 				this.showAddQuest = false;
+			},
+			questToggleVisibility(quest) {
+				axios
+					.put(
+						this.url_quest_visibility.replace(':quest', quest.id),
+						{
+							is_visible: !quest.is_visible,
+						}
+					)
+					.then(this.load);
+			},
+        	questEdit(quest) {
+				this.questToEdit = _.cloneDeep(quest);
+			},
+        	questEditConfirmed(quest) {
+				axios
+					.post(
+						this.url_quest.replace(':quest', quest.id),
+						this.questToEdit
+					)
+					.then(this.load);
+
+				this.questToEdit = null;
+			},
+        	questEditCancel() {
+				this.questToEdit = null;
 			},
 			stepAdded(step) {
 				axios

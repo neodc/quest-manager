@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddComment;
 use App\Http\Requests\EditComment;
-use App\Http\Requests\VisibilityComment;
+use App\Http\Requests\Visibility;
 use App\Models\Comment;
 use App\Models\Quest;
 use App\Models\Resource;
@@ -72,7 +72,7 @@ class CommentController extends Controller
 		$campaignService->broadcastUpdate($comment->quest->campaign_id);
 	}
 
-	public function visibility(Comment $comment, VisibilityComment $request, CampaignService $campaignService)
+	public function visibility(Comment $comment, Visibility $request, CampaignService $campaignService)
 	{
 		$this->authorize('update', $comment);
 

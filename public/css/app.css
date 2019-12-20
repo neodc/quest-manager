@@ -3245,6 +3245,10 @@ a.no-link {
   border: 2px solid #41403e;
 }
 
+.play-quest-actions {
+  float: right;
+}
+
 .play-step-list {
   -webkit-box-flex: 3;
           flex: 3;
@@ -3300,6 +3304,11 @@ a.no-link {
 
 .play-comment-list .play-comment-add i {
   font-size: 1rem;
+}
+
+.play-actions a {
+  background-image: none;
+  color: #41403e;
 }
 
 .play-step,
@@ -3374,13 +3383,5 @@ a.no-link {
 .play-step .play-step-actions-dm i,
 .play-comment .play-step-actions-dm i {
   font-size: 1rem;
-}
-
-.play-step .play-step-actions-dm a,
-.play-step .play-step-actions-player a,
-.play-comment .play-step-actions-dm a,
-.play-comment .play-step-actions-player a {
-  background-image: none;
-  color: #41403e;
 }
 
