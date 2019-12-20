@@ -3,8 +3,14 @@
 namespace App\Models;
 
 use Eloquent;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -25,9 +31,9 @@ use Illuminate\Support\Carbon;
  * @property-read Collection|Comment[] $comments
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  */
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-	use Notifiable;
+	use Authenticatable, Authorizable, CanResetPassword, Notifiable;
 
 	/**
 	 * The attributes that are mass assignable.
