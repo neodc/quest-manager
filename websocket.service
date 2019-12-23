@@ -1,0 +1,10 @@
+[Unit]
+Description=Quest web socket service
+After=local-fs.target remote-fs.target network.target
+
+[Service]
+ExecStart=/usr/bin/php /var/www/quest/artisan websockets:serve
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
