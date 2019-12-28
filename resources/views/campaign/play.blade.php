@@ -17,6 +17,9 @@
 		:url_comment="'{{ route('api.comment.edit', [':comment']) }}'"
 		:url_comment_visibility="'{{ route('api.comment.visibility', [':comment']) }}'"
 		:url_comment_add="'{{ route('api.comment.add') }}'"
+		:url_resource="'{{ route('api.resource.edit', [':resource']) }}'"
+		:url_resource_visibility="'{{ route('api.resource.visibility', [':resource']) }}'"
+		:url_resource_add="'{{ route('api.resource.add') }}'"
 	></play>
 </div>
 @endsection

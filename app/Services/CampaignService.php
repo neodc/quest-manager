@@ -2,19 +2,18 @@
 
 namespace App\Services;
 
-use App\Events\CampaignDmUpdated;
 use App\Events\CampaignUpdated;
 use App\Models\Campaign;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CampaignService
 {
 	public function getDataToClientForUser(Campaign $campaign, User $user)
 	{
-		$isDm = $campaign->users()->newPivotStatementForId($user->getKey())->first()->is_dm;
+		$isDm = (bool)$campaign->users()->newPivotStatementForId($user->getKey())->first()->is_dm;
 
 		$data = $this->getDataToClient($campaign, $isDm);
 
@@ -29,20 +28,22 @@ class CampaignService
 
 	public function getDataToClient(Campaign $campaign, bool $isDm)
 	{
-		$resourcesQuery = $campaign->resources();
+		$resourcesQuery = $campaign->resources()
+			->with(
+				[
+					'command_by' => function (BelongsToMany $query) {
+						$query->select(['id']);
+					}
+				]
+			);
 
 		$relations = ['quests', 'quests.steps', 'quests.comments', 'quests.comments.user', 'quests.comments.resource'];
 
 		if(!$isDm)
 		{
 			$resourcesQuery
-				->whereHas(
-					'command_by',
-					function(Builder $query)
-					{
-						$query->whereKey(\Auth::id());
-					}
-				);
+				->select(['id', 'name', 'player_description'])
+				->where('is_visible', true);
 
 			$relations = [
 				'quests' => function(HasMany $query){
@@ -72,9 +73,23 @@ class CampaignService
 			];
 		}
 
+		$users = $campaign->users()
+			->select(['id', 'name'])
+			->get()
+			->map(
+				function(User $user)
+				{
+					$user->isDM = $user->pivot->is_dm;
+					unset($user->pivot);
+
+					return $user;
+				}
+			);
+
 		return [
 			'campaign' => $campaign->load($relations)->only(['id', 'name', 'quests']),
 			'resources' => $resourcesQuery->get(),
+			'users' => $users,
 		];
 	}
 

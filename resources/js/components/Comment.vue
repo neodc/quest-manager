@@ -11,7 +11,16 @@
 				</template>
 				<textarea v-else v-model="editedComment.player_text" class="is-fullwidth"></textarea>
 			</template>
-			<template v-else>{{ name }}</template>
+			<template v-else>
+				<a
+					v-if="linkedResource !== null"
+					:href="'#resource-'+linkedResource.id"
+					class="no-link"
+				>
+					{{ name }}
+				</a>
+				<template v-else>{{ name }}</template>
+			</template>
 			<span class="play-actions">
 				<a v-if="comment.step_id !== null" @mouseover="showStep" @mouseleave="hoverStep = null">
 					<i>⤴️</i>
@@ -22,7 +31,7 @@
 					<a v-else title="show" @click="toggleVisibility"><i>🚷</i></a>
 				</template>
 			</span>
-			<span v-if="canEdit" class="play-actions play-step-actions-dm">
+			<span v-if="canEdit" class="play-actions play-actions-dm">
 				<a v-if="editing" title="validate" @click="validateEdit"><i>✅️</i></a>
 				<a v-else title="edit" @click="edit"><i>✏️</i></a>
 
@@ -74,8 +83,7 @@
 			};
 		},
 		computed: {
-        	name()
-			{
+        	name() {
 				if( this.comment.type === 'event' )
 				{
 					return this.comment.player_text;
@@ -91,9 +99,25 @@
 
 				return 'Deleted';
 			},
-			canEdit()
-			{
+			canEdit() {
 				return this.user.isDM || this.user.id === this.comment.user_id;
+			},
+			linkedResource() {
+				const resource = this.comment.resource;
+
+				if( resource === null ) {
+        			return null;
+				}
+
+        		if( this.user.isDM ) {
+        			return resource;
+				}
+
+        		if( this.resources.findIndex(r => r.id === resource.id) >= 0 ) {
+					return resource;
+				}
+
+        		return null;
 			}
 		},
 		methods: {

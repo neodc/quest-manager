@@ -1,64 +1,108 @@
 <template>
 	<div class="play-space" v-if="campaign !== null">
-		<div class="play-quest-list">
-			<ul>
-				<li v-for="quest in campaign.quests" :class="{'active': quest.id === currentQuestId}">
-					<template v-if="quest.id !== currentQuestId || questToEdit === null">
+		<div class="play-list">
+			<div class="play-quest-list">
+				<ul>
+					<li v-for="quest in campaign.quests" :class="{'active': isCurrent(quest.id, 'quest')}">
+						<template v-if="!isCurrent(quest.id, 'quest') || questToEdit === null">
+							<a
+								:href="'#quest-' + quest.id"
+								class="no-link"
+							>
+								{{ quest.name }}
+							</a>
+							<span v-if="isCurrent(quest.id, 'quest') && user.isDM" class="play-actions play-quest-actions">
+								&nbsp;
+								<a v-if="quest.is_visible" title="hide" @click="questToggleVisibility(quest)"><i>🚹</i></a>
+								<a v-else title="show" @click="questToggleVisibility(quest)"><i>🚷</i></a>
+
+								<a title="edit" @click="questEdit(quest)"><i>✏️</i></a>
+
+								<a title="delete" @click="questDelete(quest)"><i class="no-color">🗑</i></a>
+							</span>
+						</template>
+						<template v-else>
+							<input v-model="questToEdit.name" style="display: inline-block; width: 5.5rem"/>
+							<span v-if="isCurrent(quest.id, 'quest') && user.isDM" class="play-actions play-quest-actions">
+								<a title="validate" @click="questEditConfirmed(quest)"><i>✅️</i></a>
+								<a title="cancel" @click="questEditCancel"><i>❌</i></a>
+							</span>
+						</template>
+					</li>
+				</ul>
+				<div class="text-center">
+					<label
+						for="modal-add-quest"
+						v-if="user.isDM"
+						class="paper-btn btn-small"
+					>
+						<i>➕</i>
+					</label>
+				</div>
+				<input class="modal-state" id="modal-add-quest" type="checkbox" v-model="showAddQuest">
+				<div class="modal">
+					<label class="modal-bg" for="modal-add-quest"/>
+					<div class="modal-body is-overlay">
+						<label class="btn-close" for="modal-add-quest">X</label>
+						<h4 class="modal-title">Add comment</h4>
+						<form @submit.prevent="questAdded">
+							<div class="form-group">
+								<label for="add-quest-name">Name</label>
+								<input
+									id="add-quest-name"
+									v-model="questToAdd.name"
+									class="is-fullwidth"
+									required
+								/>
+							</div>
+							<div class="text-center">
+								<input type="submit" value="Add" class="is-inline">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="play-resource-list">
+				<ul>
+					<li v-for="resource in resources" :class="{'active': isCurrent(resource.id, 'resource')}">
 						<a
-							:href="'#' + quest.id"
-							@click="questSelect(quest)"
+							:href="'#resource-' + resource.id"
 							class="no-link"
 						>
-							{{ quest.name }}
+							{{ resource.name }}
 						</a>
-						<span v-if="quest.id === currentQuestId && user.isDM" class="play-actions play-quest-actions">
-							&nbsp;
-							<a v-if="quest.is_visible" title="hide" @click="questToggleVisibility(quest)"><i>🚹</i></a>
-							<a v-else title="show" @click="questToggleVisibility(quest)"><i>🚷</i></a>
-
-							<a title="edit" @click="questEdit(quest)"><i>✏️</i></a>
-
-							<a title="delete" @click="questDelete(quest)"><i class="no-color">🗑</i></a>
-						</span>
-					</template>
-					<template v-else>
-						<input v-model="questToEdit.name" style="display: inline-block; width: 5.5rem"/>
-						<span v-if="quest.id === currentQuestId && user.isDM" class="play-actions play-quest-actions">
-							<a title="validate" @click="questEditConfirmed(quest)"><i>✅️</i></a>
-							<a title="cancel" @click="questEditCancel"><i>❌</i></a>
-						</span>
-					</template>
-				</li>
-			</ul>
-			<div class="text-center">
-				<label
-					for="modal-add-quest"
-					v-if="user.isDM"
-					class="paper-btn btn-small"
-				>
-					<i>➕</i>
-				</label>
-			</div>
-			<input class="modal-state" id="modal-add-quest" type="checkbox" v-model="showAddQuest">
-			<div class="modal">
-				<label class="modal-bg" for="modal-add-quest"/>
-				<div class="modal-body is-overlay">
-					<label class="btn-close" for="modal-add-quest">X</label>
-					<h4 class="modal-title">Add comment</h4>
-					<form @submit.prevent="questAdded">
-						<div class="form-group">
-							<label for="add-quest-name">Name</label>
-							<input
-								id="add-quest-name"
-								v-model="questToAdd.name"
-								class="is-fullwidth"
-								required
-							/>
-						</div>
-						<div class="text-center">
-							<input type="submit" value="Add" class="is-inline">
-						</div>
-					</form>
+					</li>
+				</ul>
+				<div class="text-center">
+					<label
+						for="modal-add-resource"
+						v-if="user.isDM"
+						class="paper-btn btn-small"
+					>
+						<i>➕</i>
+					</label>
+				</div>
+				<input class="modal-state" id="modal-add-resource" type="checkbox" v-model="showAddResource">
+				<div class="modal">
+					<label class="modal-bg" for="modal-add-resource"/>
+					<div class="modal-body is-overlay">
+						<label class="btn-close" for="modal-add-resource">X</label>
+						<h4 class="modal-title">Add resource</h4>
+						<form @submit.prevent="resourceAdded">
+							<div class="form-group">
+								<label for="add-resource-name">Name</label>
+								<input
+									id="add-resource-name"
+									v-model="resourceToAdd.name"
+									class="is-fullwidth"
+									required
+								/>
+							</div>
+							<div class="text-center">
+								<input type="submit" value="Add" class="is-inline">
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -76,6 +120,15 @@
 			@comment-edited="commentEdited"
 			@comment-visibility-change="commentVisibilityChange"
 			@comment-delete="commentDelete"
+		/>
+		<resource
+			v-if="currentResource !== null"
+			:resource="currentResource"
+			:user="user"
+			:users="users"
+			@edited="resourceEdited"
+			@visibility-change="resourceVisibilityChange"
+			@delete="resourceDelete"
 		/>
     </div>
 </template>
@@ -131,15 +184,35 @@
 				type: String,
 				required: true,
 			},
+			url_resource: {
+				type: String,
+				required: true,
+			},
+			url_resource_add: {
+				type: String,
+				required: true,
+			},
+			url_resource_visibility: {
+				type: String,
+				required: true,
+			},
         },
 		data() {
-        	return {
+			return {
 				campaign: null,
 				user: null,
 				resources: null,
-				currentQuestId: parseInt(location.hash.slice(1)),
+				users: null,
+				current: {
+					type: null,
+					id: null,
+				},
 				showAddQuest: false,
+				showAddResource: false,
 				questToAdd: {
+					name: '',
+				},
+				resourceToAdd: {
 					name: '',
 				},
 				questToEdit: null,
@@ -147,12 +220,24 @@
 		},
 		computed: {
 			currentQuest() {
-				if (this.campaign && this.campaign.quests) {
-					const quest = this.campaign.quests.find((quest) => quest.id === this.currentQuestId);
+				if (this.current.type == 'quest' && this.campaign && this.campaign.quests) {
+					const quest = this.campaign.quests.find((quest) => quest.id === this.current.id);
 
 					if( quest )
 					{
 						return quest;
+					}
+				}
+
+				return null;
+			},
+			currentResource() {
+				if (this.current.type == 'resource' && this.resources) {
+					const resource = this.resources.find((resource) => resource.id === this.current.id);
+
+					if( resource )
+					{
+						return resource;
 					}
 				}
 
@@ -168,10 +253,17 @@
 				this.campaign = data.campaign;
 				this.user = data.user;
 				this.resources = data.resources;
+				this.users = data.users;
 			},
-			questSelect(quest) {
-        		this.currentQuestId = quest.id;
-        		this.questToEdit = null;
+			setCurrentByHash() {
+				const hash = location.hash.slice(1).split('-');
+
+				if( hash.length >= 2 )
+				{
+					this.current.type = hash[0];
+					this.current.id = parseInt(hash[1]);
+					this.questToEdit = null;
+				}
 			},
         	questAdded() {
 				axios
@@ -297,6 +389,50 @@
 					.delete(this.url_comment.replace(':comment', comment.id))
 					.then(this.load);
 			},
+			resourceAdded() {
+				axios
+					.post(
+						this.url_resource_add,
+						{
+							name: this.resourceToAdd.name,
+							campaign_id: this.campaign.id,
+						}
+					)
+					.then(this.load);
+
+				this.showAddResource = false;
+			},
+			resourceEdited(resource) {
+				axios
+					.post(
+						this.url_resource.replace(':resource', resource.id),
+						{
+							name: resource.name,
+							player_description: resource.player_description,
+							dm_description: resource.dm_description,
+							command_by: resource.command_by,
+						}
+					)
+					.then(this.load);
+			},
+			resourceVisibilityChange(resource) {
+				axios
+					.put(
+						this.url_resource_visibility.replace(':resource', resource.id),
+						{
+							is_visible: resource.is_visible,
+						}
+					)
+					.then(this.load);
+			},
+			resourceDelete(resource) {
+				axios
+					.delete(this.url_resource.replace(':resource', resource.id))
+					.then(this.load);
+			},
+			isCurrent(id, type) {
+        		return this.current.id === id && this.current.type === type;
+			}
 		},
 		created() {
 			this.load();
@@ -310,6 +446,9 @@
 						self.resources = e.resources;
 					}
 				);
+
+			window.addEventListener('hashchange', this.setCurrentByHash);
+			this.setCurrentByHash();
 		}
 	}
 </script>

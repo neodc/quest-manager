@@ -103,7 +103,7 @@
 								class="is-fullwidth"
 							>
 								<option :value="null">{{ user.name }}</option>
-								<option v-for="resource in resources" :value="resource.id">{{ resource.name }}</option>
+								<option v-for="resource in commandedResources" :value="resource.id">{{ resource.name }}</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -167,9 +167,24 @@
 				},
 			};
 		},
+		computed: {
+        	commandedResources() {
+        		if(this.user.isDM) {
+					return this.resources;
+				}
+
+        		const userId = this.user.id;
+
+        		return this.resources.filter(
+        			function(resource)
+					{
+						return resource.command_by.findIndex(user => user.id === userId) >= 0;
+					}
+				)
+			}
+		},
 		methods: {
-        	addStep()
-			{
+        	addStep() {
 				this.$emit(
 					'step-added',
 					{
@@ -186,8 +201,7 @@
 				this.stepToAdd.player_content = '';
 				this.stepToAdd.dm_content = '';
 			},
-        	addComment()
-			{
+        	addComment() {
 				this.$emit(
 					'comment-added',
 					{

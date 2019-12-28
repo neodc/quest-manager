@@ -32,6 +32,11 @@ class Resource extends Model
 		'is_visible',
 	];
 
+	protected $appends = [
+		'player_description_html',
+		'dm_description_html',
+	];
+
 	protected $casts = [
 		'is_visible' => 'boolean',
 	];
@@ -48,6 +53,20 @@ class Resource extends Model
 
 	public function command_by()
 	{
-		return $this->belongsToMany(User::class, 'user_can_talk_as_resource');
+		return $this->belongsToMany(User::class, 'user_can_talk_as_resource')->withTimestamps();
+	}
+
+	public function getPlayerDescriptionHtmlAttribute()
+	{
+		return \Parsedown::instance()->text($this->player_description);
+	}
+
+	public function getDmDescriptionHtmlAttribute()
+	{
+		if( $this->dm_description === null ){
+			return null;
+		}
+
+		return \Parsedown::instance()->text($this->dm_description);
 	}
 }

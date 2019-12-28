@@ -14,7 +14,9 @@
 		@foreach($campaigns as $campaign)
 			<li>
 				<a href="{{ route('campaign.play', ['campaign' => $campaign]) }}">{{ $campaign->name }}</a>
-				<a href="{{ route('campaign.edit', ['campaign' => $campaign]) }}" class="no-link"><i>✏️</i></a>
+				@can('update', $campaign)
+					<a href="{{ route('campaign.edit', ['campaign' => $campaign]) }}" class="no-link"><i>✏️</i></a>
+				@endcan
 			</li>
 		@endforeach
 	</ul>

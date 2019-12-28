@@ -20,6 +20,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\QuestController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\StepController;
 use Illuminate\Routing\Router;
 
@@ -74,5 +75,10 @@ Route::group(
 		$route->post('/api/comment/{comment}', [CommentController::class, 'edit'])->name('api.comment.edit');
 		$route->delete('/api/comment/{comment}', [CommentController::class, 'delete'])->name('api.comment.delete');
 		$route->put('/api/comment/{comment}/visibility', [CommentController::class, 'visibility'])->name('api.comment.visibility');
+
+		$route->post('/api/resource', [ResourceController::class, 'add'])->name('api.resource.add');
+		$route->post('/api/resource/{resource}', [ResourceController::class, 'edit'])->name('api.resource.edit');
+		$route->delete('/api/resource/{resource}', [ResourceController::class, 'delete'])->name('api.resource.delete');
+		$route->put('/api/resource/{resource}/visibility', [ResourceController::class, 'visibility'])->name('api.resource.visibility');
 	}
 );

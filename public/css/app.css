@@ -3195,35 +3195,54 @@ a.no-link {
   cursor: pointer;
 }
 
-.play-quest-list {
+.play-list {
   -webkit-box-flex: 0;
           flex: 0;
   max-width: 12rem;
+  margin-right: 1rem;
+}
+
+.play-quest-list {
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
   border-top-left-radius: 255px 15px;
   border-top-right-radius: 15px 225px;
-  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.play-resource-list {
+  border-bottom-left-radius: 225px 15px;
+  border-bottom-right-radius: 15px 255px;
+  border-top-left-radius: 15px 225px;
+  border-top-right-radius: 255px 15px;
+}
+
+.play-quest-list,
+.play-resource-list {
   padding: .25rem .75rem;
 }
 
-.play-quest-list ul {
+.play-quest-list ul,
+.play-resource-list ul {
   padding: 0;
 }
 
-.play-quest-list ul li {
+.play-quest-list ul li,
+.play-resource-list ul li {
   text-indent: 7px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.play-quest-list ul li.active {
+.play-quest-list ul li.active,
+.play-resource-list ul li.active {
   font-weight: bold;
   text-indent: 22px;
 }
 
-.play-quest-list ul li.active::before {
+.play-quest-list ul li.active::before,
+.play-resource-list ul li.active::before {
   content: "+";
 }
 
@@ -3240,7 +3259,9 @@ a.no-link {
 }
 
 .play-quest-list,
-.play-quest {
+.play-quest,
+.play-resource-list,
+.play-resource {
   background-color: #e6e5e5;
   border: 2px solid #41403e;
 }
@@ -3311,8 +3332,17 @@ a.no-link {
   color: #41403e;
 }
 
+.play-actions.play-actions-dm {
+  float: right;
+}
+
+.play-actions.play-actions-dm i {
+  font-size: 1rem;
+}
+
 .play-step,
-.play-comment {
+.play-comment,
+.play-resource-description {
   border: 1.5px solid #41403e;
   padding: .5rem 1rem;
   margin: .5rem 0;
@@ -3321,7 +3351,8 @@ a.no-link {
 }
 
 .play-step:nth-of-type(6n),
-.play-comment:nth-of-type(6n) {
+.play-comment:nth-of-type(6n),
+.play-resource-description:nth-of-type(6n) {
   border-bottom-left-radius: 225px 15px;
   border-bottom-right-radius: 15px 255px;
   border-top-left-radius: 15px 225px;
@@ -3329,7 +3360,8 @@ a.no-link {
 }
 
 .play-step:nth-of-type(6n+1),
-.play-comment:nth-of-type(6n+1) {
+.play-comment:nth-of-type(6n+1),
+.play-resource-description:nth-of-type(6n+1) {
   border-bottom-left-radius: 25px 115px;
   border-bottom-right-radius: 155px 25px;
   border-top-left-radius: 15px 225px;
@@ -3337,7 +3369,8 @@ a.no-link {
 }
 
 .play-step:nth-of-type(6n+2),
-.play-comment:nth-of-type(6n+2) {
+.play-comment:nth-of-type(6n+2),
+.play-resource-description:nth-of-type(6n+2) {
   border-bottom-left-radius: 20px 115px;
   border-bottom-right-radius: 15px 105px;
   border-top-left-radius: 250px 15px;
@@ -3345,7 +3378,8 @@ a.no-link {
 }
 
 .play-step:nth-of-type(6n+3),
-.play-comment:nth-of-type(6n+3) {
+.play-comment:nth-of-type(6n+3),
+.play-resource-description:nth-of-type(6n+3) {
   border-bottom-left-radius: 15px 225px;
   border-bottom-right-radius: 20px 205px;
   border-top-left-radius: 28px 125px;
@@ -3353,7 +3387,8 @@ a.no-link {
 }
 
 .play-step:nth-of-type(6n+4),
-.play-comment:nth-of-type(6n+4) {
+.play-comment:nth-of-type(6n+4),
+.play-resource-description:nth-of-type(6n+4) {
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
   border-top-left-radius: 255px 15px;
@@ -3361,7 +3396,8 @@ a.no-link {
 }
 
 .play-step:nth-of-type(6n+5),
-.play-comment:nth-of-type(6n+5) {
+.play-comment:nth-of-type(6n+5),
+.play-resource-description:nth-of-type(6n+5) {
   border-bottom-left-radius: 185px 25px;
   border-bottom-right-radius: 20px 205px;
   border-top-left-radius: 125px 25px;
@@ -3369,19 +3405,24 @@ a.no-link {
 }
 
 .play-step .dm-content,
-.play-comment .dm-content {
+.play-comment .dm-content,
+.play-resource-description .dm-content {
   background-color: #f0cbc9;
   margin: 0 -1rem -0.5rem -1rem;
   padding: 0 1rem .5rem 1rem;
 }
 
-.play-step .play-step-actions-dm,
-.play-comment .play-step-actions-dm {
-  float: right;
+.play-resource {
+  -webkit-box-flex: 1;
+          flex: 1;
+  border-bottom-left-radius: 25px 115px;
+  border-bottom-right-radius: 155px 25px;
+  border-top-left-radius: 15px 225px;
+  border-top-right-radius: 25px 150px;
+  padding: .75rem 1.5rem;
 }
 
-.play-step .play-step-actions-dm i,
-.play-comment .play-step-actions-dm i {
-  font-size: 1rem;
+.play-resource h4 {
+  margin: 0;
 }
 
