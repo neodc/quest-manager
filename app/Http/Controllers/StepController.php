@@ -6,24 +6,17 @@ use App\Http\Requests\AddStep;
 use App\Http\Requests\EditStep;
 use App\Http\Requests\StateStep;
 use App\Http\Requests\Visibility;
-use App\Models\Campaign;
 use App\Models\Quest;
 use App\Models\Step;
 use App\Services\CampaignService;
-use Illuminate\Database\Eloquent\Builder;
 
 class StepController extends Controller
 {
 	public function add(AddStep $request, CampaignService $campaignService)
 	{
-		$campaign = Campaign::whereHas(
-			'quests',
-			function (Builder $query) use ($request) {
-				$query->whereKey($request->get('quest_id'));
-			}
-		);
-
 		$quest = Quest::findOrFail($request->get('quest_id'));
+
+		$campaign = $quest->campaign;
 
 		$this->authorize('update', $quest);
 

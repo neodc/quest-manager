@@ -7,6 +7,7 @@
 				@visibility-change="$emit('step-visibility-change', $event)"
 				@state-change="$emit('step-state-change', $event)"
 				@delete="$emit('step-delete', $event)"
+				@step-comment="commentOnStep"
 				:step="step"
 				:user="user"
 				:key="step.id"
@@ -164,6 +165,7 @@
 					resource_id: null,
 					player_text: '',
 					dm_text: '',
+					step_id: null,
 				},
 			};
 		},
@@ -209,6 +211,7 @@
 						resource_id: this.commentToAdd.resource_id,
 						player_text: this.commentToAdd.player_text,
 						dm_text: this.commentToAdd.dm_text,
+						step_id: this.commentToAdd.step_id,
 						quest_id: this.quest.id,
 					}
 				);
@@ -220,6 +223,17 @@
 				this.commentToAdd.player_text = '';
 				this.commentToAdd.dm_text = '';
 			},
+			commentOnStep(step) {
+        		this.commentToAdd.step_id = step.id;
+        		this.showAddComment = true;
+			}
+		},
+		watch: {
+			showAddComment(after, before) {
+				if( after === false ) {
+					this.commentToAdd.step_id = null;
+				}
+			}
 		},
 	}
 </script>

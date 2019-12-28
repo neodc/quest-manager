@@ -30,6 +30,7 @@ class CommentController extends Controller
 				'dm_text' => $request->get('dm_text') ?? '',
 				'type' => $request->get('type') ?? 'message',
 				'quest_id' => $request->get('quest_id'),
+				'step_id' => $request->get('step_id'),
 
 				'is_visible' => !$isDm,
 				'user_id' => \Auth::id(),

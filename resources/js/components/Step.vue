@@ -33,6 +33,8 @@
 					<a v-if="step.is_visible" title="hide" @click="toggleVisibility"><i>🚹</i></a>
 					<a v-else title="show" @click="toggleVisibility"><i>🚷</i></a>
 				</template>
+
+				<a title="comment" @click="$emit('step-comment', step)"><i>💬</i></a>
 			</span>
 			<span v-if="user.isDM" class="play-actions play-actions-dm">
 				<a v-if="editing" title="validate" @click="validateEdit"><i>✅️</i></a>
