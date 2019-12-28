@@ -20,6 +20,7 @@
 		:url_resource="'{{ route('api.resource.edit', [':resource']) }}'"
 		:url_resource_visibility="'{{ route('api.resource.visibility', [':resource']) }}'"
 		:url_resource_add="'{{ route('api.resource.add') }}'"
+		:startup_campaign_data="{{ json_encode($campaignData) }}"
 	></play>
 </div>
 @endsection

@@ -196,13 +196,17 @@
 				type: String,
 				required: true,
 			},
+			startup_campaign_data: {
+				type: Object,
+				required: true,
+			},
         },
 		data() {
 			return {
-				campaign: null,
-				user: null,
-				resources: null,
-				users: null,
+				campaign: this.startup_campaign_data.campaign,
+				user: this.startup_campaign_data.user,
+				resources: this.startup_campaign_data.resources,
+				users: this.startup_campaign_data.users,
 				current: {
 					type: null,
 					id: null,
@@ -220,7 +224,7 @@
 		},
 		computed: {
 			currentQuest() {
-				if (this.current.type == 'quest' && this.campaign && this.campaign.quests) {
+				if (this.current.type === 'quest') {
 					const quest = this.campaign.quests.find((quest) => quest.id === this.current.id);
 
 					if( quest )
@@ -232,7 +236,7 @@
 				return null;
 			},
 			currentResource() {
-				if (this.current.type == 'resource' && this.resources) {
+				if (this.current.type === 'resource') {
 					const resource = this.resources.find((resource) => resource.id === this.current.id);
 
 					if( resource )
@@ -246,6 +250,13 @@
 		},
 		methods: {
         	async load() {
+        		const wsState = Echo.connector.pusher.connection.state;
+
+        		if( wsState === 'connected' ) {
+					// We will get the data by ws, no need to make a call for it
+					return;
+				}
+
         		// TODO add loader
 				// TODO add error catch
 				const data = (await axios.get(this.url_update)).data;
@@ -435,7 +446,6 @@
 			}
 		},
 		created() {
-			this.load();
 			let self = this;
 
 			Echo.private(this.broadcast_channel)

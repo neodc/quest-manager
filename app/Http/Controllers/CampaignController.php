@@ -104,7 +104,7 @@ class CampaignController extends Controller
 		return redirect()->route('campaign.edit', $campaign);
 	}
 
-	public function play(Campaign $campaign)
+	public function play(Campaign $campaign, CampaignService $campaignDataService)
 	{
 		$this->authorize('view', $campaign);
 
@@ -116,6 +116,7 @@ class CampaignController extends Controller
 				'needJs' => true,
 				'campaign' => $campaign,
 				'channel' => 'campaign-' . ($isDm ? 'dm' : 'player') . '.' . $campaign->id,
+				'campaignData' => $campaignDataService->getDataToClientForUser($campaign, \Auth::user()),
 			]
 		);
 	}
