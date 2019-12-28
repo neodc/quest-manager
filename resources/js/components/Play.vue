@@ -1,5 +1,5 @@
 <template>
-	<div class="play-space" v-if="campaign !== null">
+	<div class="play-space" v-if="campaign !== null" :class="{'is-loading': loading}">
 		<div class="play-list">
 			<div class="play-quest-list">
 				<ul>
@@ -220,6 +220,7 @@
 					name: '',
 				},
 				questToEdit: null,
+				loading: false,
 			};
 		},
 		computed: {
@@ -257,7 +258,6 @@
 					return;
 				}
 
-        		// TODO add loader
 				// TODO add error catch
 				const data = (await axios.get(this.url_update)).data;
 
@@ -265,6 +265,8 @@
 				this.user = data.user;
 				this.resources = data.resources;
 				this.users = data.users;
+
+				this.loading = false;
 			},
 			setCurrentByHash() {
 				const hash = location.hash.slice(1).split('-');
@@ -277,6 +279,8 @@
 				}
 			},
         	questAdded() {
+				this.loading = true;
+
 				axios
 					.post(
 						this.url_quest_add,
@@ -294,6 +298,8 @@
 					return;
 				}
 
+				this.loading = true;
+
 				axios
 					.delete(this.url_quest.replace(':quest', quest.id))
 					.then(this.load);
@@ -301,6 +307,8 @@
 				this.showAddQuest = false;
 			},
 			questToggleVisibility(quest) {
+				this.loading = true;
+
 				axios
 					.put(
 						this.url_quest_visibility.replace(':quest', quest.id),
@@ -314,6 +322,8 @@
 				this.questToEdit = _.cloneDeep(quest);
 			},
         	questEditConfirmed(quest) {
+				this.loading = true;
+
 				axios
 					.post(
 						this.url_quest.replace(':quest', quest.id),
@@ -327,11 +337,15 @@
 				this.questToEdit = null;
 			},
 			stepAdded(step) {
+				this.loading = true;
+
 				axios
 					.post(this.url_step_add, step)
 					.then(this.load);
 			},
 			stepEdited(step) {
+				this.loading = true;
+
 				axios
 					.post(
 						this.url_step.replace(':step', step.id),
@@ -344,6 +358,8 @@
 					.then(this.load);
 			},
 			stepVisibilityChange(step) {
+				this.loading = true;
+
 				axios
 					.put(
 						this.url_step_visibility.replace(':step', step.id),
@@ -354,6 +370,8 @@
 					.then(this.load);
 			},
 			stepStateChange(step) {
+				this.loading = true;
+
 				axios
 					.put(
 						this.url_step_state.replace(':step', step.id),
@@ -364,16 +382,22 @@
 					.then(this.load);
 			},
 			stepDelete(step) {
+				this.loading = true;
+
 				axios
 					.delete(this.url_step.replace(':step', step.id))
 					.then(this.load);
 			},
 			commentAdded(comment) {
+				this.loading = true;
+
 				axios
 					.post(this.url_comment_add, comment)
 					.then(this.load);
 			},
 			commentEdited(comment) {
+				this.loading = true;
+
 				axios
 					.post(
 						this.url_comment.replace(':comment', comment.id),
@@ -386,6 +410,8 @@
 					.then(this.load);
 			},
 			commentVisibilityChange(comment) {
+				this.loading = true;
+
 				axios
 					.put(
 						this.url_comment_visibility.replace(':comment', comment.id),
@@ -396,11 +422,15 @@
 					.then(this.load);
 			},
 			commentDelete(comment) {
+				this.loading = true;
+
 				axios
 					.delete(this.url_comment.replace(':comment', comment.id))
 					.then(this.load);
 			},
 			resourceAdded() {
+				this.loading = true;
+
 				axios
 					.post(
 						this.url_resource_add,
@@ -414,6 +444,8 @@
 				this.showAddResource = false;
 			},
 			resourceEdited(resource) {
+				this.loading = true;
+
 				axios
 					.post(
 						this.url_resource.replace(':resource', resource.id),
@@ -427,6 +459,8 @@
 					.then(this.load);
 			},
 			resourceVisibilityChange(resource) {
+				this.loading = true;
+
 				axios
 					.put(
 						this.url_resource_visibility.replace(':resource', resource.id),
@@ -437,13 +471,15 @@
 					.then(this.load);
 			},
 			resourceDelete(resource) {
+				this.loading = true;
+
 				axios
 					.delete(this.url_resource.replace(':resource', resource.id))
 					.then(this.load);
 			},
 			isCurrent(id, type) {
         		return this.current.id === id && this.current.type === type;
-			}
+			},
 		},
 		created() {
 			let self = this;
@@ -454,6 +490,7 @@
 					function (e) {
 						self.campaign = e.campaign;
 						self.resources = e.resources;
+						self.loading = false;
 					}
 				);
 

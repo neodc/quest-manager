@@ -31,3 +31,32 @@ a.no-link {
 	background-image: none;
 	color: $primary;
 }
+
+.is-loading {
+	opacity: .5;
+	position: relative;
+
+	&:after {
+		content: '';
+		border: solid 2px transparent;
+		position: absolute;
+		top: calc(50% - (5rem / 2));
+		left: calc(50% - (5rem / 2));
+		border-top-color: black;
+		border-right-color: black;
+		border-radius: 100%;
+		width: 5rem;
+		height: 5rem;
+		animation: spin .5s infinite linear;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(359deg);
+	}
+}

@@ -3168,6 +3168,50 @@ a.no-link {
   color: #41403e;
 }
 
+.is-loading {
+  opacity: .5;
+  position: relative;
+}
+
+.is-loading:after {
+  content: '';
+  border: solid 2px transparent;
+  position: absolute;
+  top: calc(50% - (5rem / 2));
+  left: calc(50% - (5rem / 2));
+  border-top-color: black;
+  border-right-color: black;
+  border-radius: 100%;
+  width: 5rem;
+  height: 5rem;
+  -webkit-animation: spin .5s infinite linear;
+          animation: spin .5s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
 .paper-btn {
   background-color: white;
 }
