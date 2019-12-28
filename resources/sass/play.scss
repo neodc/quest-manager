@@ -10,6 +10,15 @@
 	margin: 10px auto 0;
 	padding: 0 50px;
 
+	@include transition();
+
+	@include resp(large) {
+		padding: 0 25px;
+	}
+	@include resp(medium) {
+		padding: 0 10px;
+	}
+
 	h2 {
 		margin-bottom: .5em;
 	}

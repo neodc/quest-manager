@@ -3223,6 +3223,20 @@ a.no-link {
 .play-container {
   margin: 10px auto 0;
   padding: 0 50px;
+  -webkit-transition: all 235ms ease-in-out 0s;
+  transition: all 235ms ease-in-out 0s;
+}
+
+@media only screen and (max-width: 1200px) {
+  .play-container {
+    padding: 0 25px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .play-container {
+    padding: 0 10px;
+  }
 }
 
 .play-container h2 {
