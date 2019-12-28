@@ -258,15 +258,22 @@
 					return;
 				}
 
-				// TODO add error catch
-				const data = (await axios.get(this.url_update)).data;
+				try {
+					const data = (await axios.get(this.url_update)).data;
 
-				this.campaign = data.campaign;
-				this.user = data.user;
-				this.resources = data.resources;
-				this.users = data.users;
+					this.campaign = data.campaign;
+					this.user = data.user;
+					this.resources = data.resources;
+					this.users = data.users;
+				}
+        		catch (e) {
+        			alert('An error happend: "' + e + '"');
 
-				this.loading = false;
+					console.error(e);
+				}
+        		finally {
+					this.loading = false;
+				}
 			},
 			setCurrentByHash() {
 				const hash = location.hash.slice(1).split('-');
