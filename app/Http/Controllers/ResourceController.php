@@ -34,12 +34,12 @@ class ResourceController extends Controller
 		$this->authorize('update', $resource);
 
 		$resource->name = $request->name;
-		$resource->player_description = $request->get('player_description', '');
-		$resource->dm_description= $request->get('dm_description', '');
+		$resource->player_description = $request->get('player_description') ?? '';
+		$resource->dm_description= $request->get('dm_description') ?? '';
 
 		$resource->save();
 
-		$resource->command_by()->sync($request->get('command_by', []));
+		$resource->command_by()->sync($request->get('command_by') ?? []);
 
 		$campaignService->broadcastUpdate($resource->campaign_id);
 	}

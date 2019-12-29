@@ -44,7 +44,7 @@
 					<label class="modal-bg" for="modal-add-quest"/>
 					<div class="modal-body is-overlay">
 						<label class="btn-close" for="modal-add-quest">X</label>
-						<h4 class="modal-title">Add comment</h4>
+						<h4 class="modal-title">Add quest</h4>
 						<form @submit.prevent="questAdded">
 							<div class="form-group">
 								<label for="add-quest-name">Name</label>
@@ -299,6 +299,7 @@
 					.then(this.load);
 
 				this.showAddQuest = false;
+				this.questToAdd.name = '';
 			},
         	questDelete(quest) {
 				if(!confirm('Are you sure you want to delete the quest "' + quest.name + '" and all it\'s content?')) {
@@ -449,6 +450,7 @@
 					.then(this.load);
 
 				this.showAddResource = false;
+				this.resourceToAdd.name = '';
 			},
 			resourceEdited(resource) {
 				this.loading = true;
