@@ -11,6 +11,7 @@
 		:url_quest="'{{ route('api.quest.edit', [':quest']) }}'"
 		:url_quest_visibility="'{{ route('api.quest.visibility', [':quest']) }}'"
 		:url_step="'{{ route('api.step.edit', [':step']) }}'"
+		:url_step_reorder="'{{ route('api.step.reorder') }}'"
 		:url_step_add="'{{ route('api.step.add') }}'"
 		:url_step_visibility="'{{ route('api.step.visibility', [':step']) }}'"
 		:url_step_state="'{{ route('api.step.state', [':step']) }}'"

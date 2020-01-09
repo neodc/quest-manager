@@ -2,15 +2,18 @@
 	<div class="play-quest">
 		<div class="play-step-list">
 			<step
-				v-for="step in quest.steps"
+				v-for="(step, key) in quest.steps"
 				@edited="$emit('step-edited', $event)"
 				@visibility-change="$emit('step-visibility-change', $event)"
 				@state-change="$emit('step-state-change', $event)"
 				@delete="$emit('step-delete', $event)"
 				@step-comment="commentOnStep"
+				@move="moveStep(step, $event)"
 				:step="step"
 				:user="user"
 				:key="step.id"
+				:isFirst="key === 0"
+				:isLast="(key+1) === quest.steps.length"
 				ref="steps"
 			/>
 
@@ -226,7 +229,28 @@
 			commentOnStep(step) {
         		this.commentToAdd.step_id = step.id;
         		this.showAddComment = true;
-			}
+			},
+			moveStep(stepToMove, change) {
+				let steps = this.quest.steps.slice();
+
+        		const fromIndex = steps.findIndex((step) => step.id === stepToMove.id);
+        		const toIndex = fromIndex + change;
+
+        		if(toIndex < 0) {
+		        	return;
+		        }
+
+        		// Inspired by https://stackoverflow.com/a/6470794
+				steps.splice(fromIndex, 1);
+				steps.splice(toIndex, 0, stepToMove);
+
+        		let orders = {};
+				for (let i in steps) {
+					orders[ steps[i].id ] = parseInt(i);
+				}
+
+				this.$emit('steps-reorder', this.quest.id, orders);
+            },
 		},
 		watch: {
 			showAddComment(after, before) {

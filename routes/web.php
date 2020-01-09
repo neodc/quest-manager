@@ -66,6 +66,7 @@ Route::group(
 		$route->put('/api/quest/{quest}/visibility', [QuestController::class, 'visibility'])->name('api.quest.visibility');
 
 		$route->post('/api/step', [StepController::class, 'add'])->name('api.step.add');
+		$route->post('/api/step/reorder', [StepController::class, 'reorder'])->name('api.step.reorder');
 		$route->post('/api/step/{step}', [StepController::class, 'edit'])->name('api.step.edit');
 		$route->delete('/api/step/{step}', [StepController::class, 'delete'])->name('api.step.delete');
 		$route->put('/api/step/{step}/visibility', [StepController::class, 'visibility'])->name('api.step.visibility');

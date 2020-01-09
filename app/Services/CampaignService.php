@@ -37,7 +37,15 @@ class CampaignService
 				]
 			);
 
-		$relations = ['quests', 'quests.steps', 'quests.comments', 'quests.comments.user', 'quests.comments.resource'];
+		$relations = [
+			'quests',
+			'quests.steps' => function(HasMany $query){
+				$query->orderBy('order');
+			},
+			'quests.comments',
+			'quests.comments.user',
+			'quests.comments.resource',
+		];
 
 		if(!$isDm)
 		{
@@ -56,6 +64,7 @@ class CampaignService
 					$query
 						->where('is_visible', true)
 						->select(['id', 'quest_id', 'name', 'player_content', 'state'])
+						->orderBy('order')
 					;
 				},
 				'quests.comments' => function(HasMany $query){

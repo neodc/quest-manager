@@ -28,5 +28,5 @@ window.Echo = new Echo({
 	wssPort: 443,
 	encrypted: true,
 	disableStats: true,
-	enabledTransports: ['ws', 'wss'],
+	enabledTransports: process.env.BROADCAST_DRIVER === 'pusher' ? ['ws', 'wss'] : [],
 });

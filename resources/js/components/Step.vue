@@ -37,6 +37,9 @@
 				<a title="comment" @click="$emit('step-comment', step)"><i>💬</i></a>
 			</span>
 			<span v-if="user.isDM" class="play-actions play-actions-dm">
+				<a v-if="!isFirst" title="up" @click="move(-1)"><i>👆</i></a>
+				<a v-if="!isLast" title="down" @click="move(1)"><i>👇</i></a>
+
 				<a v-if="editing" title="validate" @click="validateEdit"><i>✅️</i></a>
 				<a v-else title="edit" @click="edit"><i>✏️</i></a>
 
@@ -63,6 +66,14 @@
 			},
 			user: {
 				type: Object,
+				required: true,
+			},
+			isFirst: {
+				type: Boolean,
+				required: true,
+			},
+			isLast: {
+				type: Boolean,
 				required: true,
 			},
         },
@@ -112,6 +123,9 @@
 				if(confirm('Are you sure you want to delete the step "' + this.step.name + '"?')) {
 					this.$emit('delete', {id: this.step.id})
 				}
+			},
+			move(orderChange) {
+				this.$emit('move', orderChange);
 			},
 		},
 	}

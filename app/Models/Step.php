@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $dm_content
  * @property string $state
  * @property bool $is_visible
+ * @property int $order
  * @property-read Collection|Comment[] $comments
  * @property-read Quest $quest
  * @property-read string $player_content_html

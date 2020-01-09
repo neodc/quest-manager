@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddStep;
 use App\Http\Requests\EditStep;
+use App\Http\Requests\ReorderSteps;
 use App\Http\Requests\StateStep;
 use App\Http\Requests\Visibility;
 use App\Models\Quest;
 use App\Models\Step;
 use App\Services\CampaignService;
+use Illuminate\Support\Collection;
 
 class StepController extends Controller
 {
@@ -75,6 +77,32 @@ class StepController extends Controller
 		$step->state = $request->state;
 
 		$step->save();
+
+		$campaignService->broadcastUpdate($step->quest->campaign_id);
+	}
+
+	public function reorder(ReorderSteps $request, CampaignService $campaignService)
+	{
+		$orders = collect($request->all());
+
+		/** @var Step[]|Collection $steps */
+		$steps = Step::findMany($orders->keys());
+
+		if($steps->count() !== $orders->count())
+		{
+			abort(400);
+		}
+
+		\DB::beginTransaction();
+
+		foreach ($steps as $step)
+		{
+			$this->authorize('update', $step);
+			$step->order = $orders[ $step->id ];
+			$step->save();
+		}
+
+		\DB::commit();
 
 		$campaignService->broadcastUpdate($step->quest->campaign_id);
 	}

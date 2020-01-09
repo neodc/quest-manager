@@ -116,6 +116,7 @@
 			@step-visibility-change="stepVisibilityChange"
 			@step-state-change="stepStateChange"
 			@step-delete="stepDelete"
+			@steps-reorder="stepReorder"
 			@comment-added="commentAdded"
 			@comment-edited="commentEdited"
 			@comment-visibility-change="commentVisibilityChange"
@@ -161,6 +162,10 @@
 				required: true,
 			},
 			url_step_add: {
+				type: String,
+				required: true,
+			},
+	        url_step_reorder: {
 				type: String,
 				required: true,
 			},
@@ -394,6 +399,16 @@
 
 				axios
 					.delete(this.url_step.replace(':step', step.id))
+					.then(this.load);
+			},
+			stepReorder(questId, orders) {
+				this.loading = true;
+
+				axios
+					.post(
+						this.url_step_reorder,
+						orders
+					)
 					.then(this.load);
 			},
 			commentAdded(comment) {
